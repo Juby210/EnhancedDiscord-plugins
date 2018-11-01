@@ -88,6 +88,7 @@ function getThemeSetting(file) {
 const addTab = (header, tabsM) => {
     let themesTab = document.createElement('div');
     themesTab.className = tabsM.itemDefault + ' ed-settings';
+    themesTab.id = "ed-ttab";
     themesTab.innerHTML = 'Themes';
     header.parentNode.insertBefore(themesTab, header.nextSibling);
     const contentM = ED.classMaps.headers = findModule('defaultMarginh2');
@@ -131,7 +132,8 @@ const addTab = (header, tabsM) => {
 module.exports = new Plugin({
 	name: "Theme Settings",
 	author: "Juby210#5831",
-	description: "Adds Themes tab to EnhancedDiscord",
+    description: "Adds Themes tab to EnhancedDiscord",
+    preload: true,
 	color: "#f44336",
 	load: () => {
         if(!fs.existsSync(themesDir)) fs.mkdirSync(themesDir);
@@ -146,6 +148,7 @@ module.exports = new Plugin({
             }
 
             monkeyPatch( findModule('getUserSettingsSections').default.prototype, 'render', function() {
+                if(document.getElementById("ed-ttab")) return arguments[0].callOriginalMethod(arguments[0].methodArguments);
                 const tabsM = findModule('itemSelected');
                 let header = document.getElementsByClassName(tabsM.header + ' ed-settings')[0];
                 if(header) {
