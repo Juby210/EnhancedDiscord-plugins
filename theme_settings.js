@@ -68,9 +68,14 @@ function writeConfig() {
 }
 
 function readConfig() {
+    var configp = path.join(process.env.injDir, "plugins", "theme_settings.json");
     return new Promise((resolve, reject) => {
-        fs.readFile(path.join(process.env.injDir, "plugins", "theme_settings.json"), (err, data) => {
-            resolve(data);
+        fs.exists(configp, ex => {
+            if(!ex) fs.open(configp, 'w', err => {});
+            fs.readFile(configp, (err, data) => {
+                if(data == '') return resolve("{}");
+                resolve(data);
+            });
         });
     });
 }
