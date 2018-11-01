@@ -103,7 +103,17 @@ const addTab = (header, tabsM) => {
         this.className = this.className.replace(tabsM.itemDefault, tabsM.itemSelected);
 
         if (settingsPane) {
-            settingsPane.innerHTML = `<h2 class="${contentM.h2} ${contentM.defaultColor}" style="display: inline;">EnhancedDiscord Themes</h2><div class="${contentM.marginBottom20}"></div>`;
+            var themebtnstyle = `
+                    border-radius: 3px;
+                    display: inline-block;
+                    margin-left: 15px;
+                    margin-bottom: 2px;
+                    background: #7289da;
+                    color: #ffffff;
+                    padding: 2px;
+                `;
+            
+            settingsPane.innerHTML = `<h2 class="${contentM.h2} ${contentM.defaultColor}" style="display: inline;">EnhancedDiscord Themes</h2><button class="ed-themebtn" onclick='require("electron").shell.openItem(require("path").join(process.env.injDir, "themes"))' style="${themebtnstyle}">Open Themes Folder</button><div class="${contentM.marginBottom20}"></div>`;
             let files = fs.readdirSync(themesDir).filter(file => file.endsWith('.css'));
             for (const file of files) {
                 settingsPane.innerHTML += makeThemeToggle({path: path.join(themesDir, file), title: file});
@@ -123,7 +133,8 @@ module.exports = new Plugin({
 	author: "Juby210#5831",
 	description: "Adds Themes tab to EnhancedDiscord",
 	color: "#f44336",
-	load: async () => {
+	load: () => {
+        if(!fs.existsSync(themesDir)) fs.mkdirSync(themesDir);
         readConfig().then(cfg => {
             config = JSON.parse(cfg);
 
