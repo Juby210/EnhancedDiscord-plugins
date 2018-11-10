@@ -9,3 +9,4 @@ Note that all themes should be in: `<EDPATH>/themes` (auto create this folder on
 Supported all bd themes.
 
 ![Theme Settings](https://i.imgur.com/ApxQkhj.gif)
+By clicking `Ctrl+B` you hide all themes.

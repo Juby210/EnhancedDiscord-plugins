@@ -4,17 +4,16 @@ const path = require("path");
 const themesDir = path.join(process.env.injDir, "themes");
 let config;
 let files = [];
+let files2 = [];
 
 function makeThemeToggle(opts = {}) {
     const a = window.ED.classMaps.alignment;
     const sw = window.ED.classMaps.switchItem;
     const cb = window.ED.classMaps.checkbox;
-    const b = window.ED.classMaps.buttons;
 
     return `<div id="${opts.title}-wrap" class="${a.vertical} ${a.justifyStart} ${a.alignStretch} ${a.noWrap} ${sw.switchItem}" style="flex: 1 1 auto;">
     <div class="${a.horizontal} ${a.justifyStart} ${a.alignStart} ${a.noWrap}" style="flex: 1 1 auto;">
         <h3 class="${sw.titleDefault}" style="flex: 1 1 auto;">${opts.title}</h3>
-        ${opts.color ? ` <div class="status" style="background-color:${opts.color}; box-shadow:0 0 5px 2px ${opts.color};margin-left: 5px; border-radius: 50%; height: 10px; width: 10px; position: relative; top: 6px; margin-right: 8px;"></div>` : ''}
         <div id="${opts.title}" class="${cb.switchEnabled} ${getThemeSetting(opts.title) ? cb.valueChecked : cb.valueUnchecked} ${cb.sizeDefault} ${cb.themeDefault}">
             <input type="checkbox" class="${cb.checkboxEnabled}" value="on">
         </div>
@@ -24,21 +23,19 @@ function makeThemeToggle(opts = {}) {
 }
 
 function loadCSS(file) {
-    fs.readFile(path.join(themesDir, file), (err, data) => {
-        if(err) return;
-        var css = document.createElement('style');
-        css.id = file + "-style";
-        css.innerHTML = data;
-        document.head.appendChild(css);
-        files.push(file);
-    });
+    let data = fs.readFileSync(path.join(themesDir, file));
+    let css = document.createElement('style');
+    css.id = file + "-style";
+    css.innerHTML = data;
+    document.head.appendChild(css);
+    files.push(file);
 }
 
 function unloadCSS(file) {
-    var css = document.getElementById(file + "-style");
+    let css = document.getElementById(file + "-style");
     if(css) {
         document.head.removeChild(css);
-        var index = files.indexOf(file);
+        let index = files.indexOf(file);
         if (index != -1) files.splice(index, 1);
     }
 }
@@ -68,7 +65,7 @@ function writeConfig() {
 }
 
 function readConfig() {
-    var configp = path.join(process.env.injDir, "plugins", "theme_settings.json");
+    let configp = path.join(process.env.injDir, "plugins", "theme_settings.json");
     return new Promise((resolve, reject) => {
         fs.exists(configp, ex => {
             if(!ex) fs.open(configp, 'w', err => {});
@@ -104,7 +101,7 @@ const addTab = (header, tabsM) => {
         this.className = this.className.replace(tabsM.itemDefault, tabsM.itemSelected);
 
         if (settingsPane) {
-            var themebtnstyle = `
+            let themebtnstyle = `
                     border-radius: 3px;
                     display: inline-block;
                     margin-left: 15px;
@@ -115,8 +112,8 @@ const addTab = (header, tabsM) => {
                 `;
             
             settingsPane.innerHTML = `<h2 class="${contentM.h2} ${contentM.defaultColor}" style="display: inline;">EnhancedDiscord Themes</h2><button class="ed-themebtn" onclick='require("electron").shell.openItem(require("path").join(process.env.injDir, "themes"))' style="${themebtnstyle}">Open Themes Folder</button><div class="${contentM.marginBottom20}"></div>`;
-            let files = fs.readdirSync(themesDir).filter(file => file.endsWith('.css'));
-            for (const file of files) {
+            let filesd = fs.readdirSync(themesDir).filter(file => file.endsWith('.css'));
+            for (const file of filesd) {
                 settingsPane.innerHTML += makeThemeToggle({path: path.join(themesDir, file), title: file});
                 setTimeout(() => {
                     document.getElementById(file).addEventListener('click', () => {
@@ -159,9 +156,28 @@ module.exports = new Plugin({
                 return arguments[0].callOriginalMethod(arguments[0].methodArguments);
             });
         });
+        
+        document.onkeyup = key => {
+            let lst = (files.length == 0);
+            if (key.ctrlKey && key.which == 66) {
+                if (lst) {
+                    files2.forEach(file => {
+                        let index = files2.indexOf(file);
+                        if (index != -1) files2.splice(index, 1);
+                        loadCSS(file);
+                    });
+                } else {
+                    files.forEach(file => {
+                        files2.push(file);
+                        unloadCSS(file);
+                    });
+                }
+            }
+        }
 	},
 	unload: () => {
         findModule('getUserSettingsSections').default.prototype.render.unpatch();
         unloadallCSS();
+        document.onkeyup = null;
     }
 });
