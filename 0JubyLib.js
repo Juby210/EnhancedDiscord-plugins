@@ -146,7 +146,10 @@ module.exports = new Plugin({
     color: "#0000ff",
     preload: true,
     load: () => {
-        let hasJQuery = (!jQuery) ? false : true;
+        let hasJQuery = false;
+        try{
+            if(!jQuery) {} else hasJQuery = true;
+        } catch(e) {}
         if(!hasJQuery) {
             let jq = document.createElement("script");
             jq.id = "JubyLib-jQuery";
