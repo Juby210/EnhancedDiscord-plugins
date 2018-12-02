@@ -1,5 +1,5 @@
 const Plugin = require("../plugin");
-let jlSrc = "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/JubyLib.js";
+let jlSrc = "https://juby.cf/jl/JubyLib.js";
 let jlVer = {min: 0.2, max: 0.29, tested: 0.2};
 
 function createWindow() {

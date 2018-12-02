@@ -33,6 +33,9 @@ Set user rich presence
 ### .clearPresence()
 Clear user rich presence
 
+### .getSelectedChannel(): String
+Get selected channel id
+
 ### .updatesModule: Object
 **.check(jsonUrl, pluginName, pluginVersion, pluginUrl)**: Check plugin update and show popup
 
@@ -42,7 +45,7 @@ Check if JubyLib is added to discord
 ## How to use
 ```js
 const Plugin = require("../plugin");
-let jlSrc = "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/JubyLib.js";
+let jlSrc = "https://juby.cf/jl/JubyLib.js";
 let jlVer = {min: 0.2, max: 0.29, tested: 0.2}; // min is min version supported; max is max version supported; tested is tested version
 
 function loadJL() {
