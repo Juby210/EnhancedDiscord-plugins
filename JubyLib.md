@@ -4,6 +4,7 @@ Simple library for EnhancedDiscord plugins.
 ## JubyLib Class
 ### .version: Object
 **.v**: Double (e.g. 0.1 0.11 0.2)
+
 **.name**: String (e.g. BETA 0.1)
 
 ### .load()
@@ -23,7 +24,8 @@ Create popup window like discord changelog.
 
 ### .popupCategory(name, content, defaultHidden = true): String(HTML)
 Generate category HTML like this:
-[!preview](https://i.imgur.com/kRbIU2b.gif)
+
+![preview](https://i.imgur.com/kRbIU2b.gif)
 
 ### .setPresence(id, name, details, state, time = true)
 Set user rich presence
