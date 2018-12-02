@@ -1,4 +1,6 @@
 const Plugin = require("../plugin");
+let jlSrc = "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/JubyLib.js";
+let jlVer = {min: 0.2, max: 0.29, tested: 0.2};
 
 function createWindow() {
     const footerContent = `<input type="text" placeholder="Footer Text" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-ftext">
@@ -15,6 +17,28 @@ function createWindow() {
         document.getElementById("EmbedSender-edesc").value, document.getElementById("EmbedSender-ecolor").value, document.getElementById("EmbedSender-eimage").value, {text: document.getElementById("EmbedSender-ftext").value, icon_url: document.getElementById("EmbedSender-fimage").value}));
 }
 
+function loadJL() {
+    let jl = document.createElement("script");
+    jl.id = "JubyLib-script";
+    jl.src = jlSrc;
+    document.head.appendChild(jl);
+
+    jl.onload = () => {
+        if(jlVer.max <= JubyLib.version.v || (jlVer.min >= JubyLib.version.v && jlVer.min != JubyLib.version.v)) {
+            jlSrc = `https://juby.cf/jl/JubyLib-${jlVer.tested}.js`;
+            JubyLib.unload();
+            loadJL();
+        } else {
+            JubyLib.load();
+            checkUpdate();
+        }
+    };
+}
+
+function checkUpdate() {
+    JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", "Embed Sender", 0.1, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js");
+}
+
 module.exports = new Plugin({
 	name: "Embed Sender",
 	author: "Juby210#5831",
@@ -22,14 +46,9 @@ module.exports = new Plugin({
 	color: "#0000ff",
 	load: () => {
         try {
-            if(!hasJubyLib) {
-                console.log("Download JubyLib: https://github.com/juby210-PL/EnhancedDiscord-plugins");
-                return alert("JubyLib not found! Download:\nhttps://github.com/juby210-PL/EnhancedDiscord-plugins");
-            }
-        } catch(e) {
-            console.log("Download JubyLib: https://github.com/juby210-PL/EnhancedDiscord-plugins");
-            return alert("JubyLib not found! Download:\nhttps://github.com/juby210-PL/EnhancedDiscord-plugins");
-        }
+            if(!hasJubyLib) loadJL(); else checkUpdate();
+        } catch(e) {loadJL();}
+
         const embedSenderStyle = `
 			#EmbedSender-button {
 				cursor: pointer;
