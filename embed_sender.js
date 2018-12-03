@@ -1,8 +1,10 @@
 const Plugin = require("../plugin");
 let jlSrc = "https://juby.cf/jl/JubyLib.js";
-let jlVer = {min: 0.2, max: 0.29, tested: 0.2};
+let jlVer = {min: 0.21, max: 0.29, tested: 0.21};
 
 function createWindow() {
+    const authorContent = `<input type="text" placeholder="Author Text" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-atext">
+        <input type="text" placeholder="Author Icon URL" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-aimage">`;
     const footerContent = `<input type="text" placeholder="Footer Text" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-ftext">
         <input type="text" placeholder="Footer Icon URL" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-fimage">`;
     const content = `<input type="text" value="${JubyLib.getSelectedChannel()}" placeholder="ChannelID" class="inputDefault-_djjkz input-cIJ7To size14-3iUx6q EmbedSender-input" id="EmbedSender-cid">
@@ -10,11 +12,22 @@ function createWindow() {
         <textarea placeholder="Embed Description" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" style="resize: none; height: 80px;" id="EmbedSender-edesc" />
         <input type="text" placeholder="Embed Color (e.g. 0000FF)" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-ecolor">
         <input type="text" placeholder="Embed Image URL" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-eimage">
+        <input type="text" placeholder="Embed Thumbnail URL" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-ethumb">
+        ${JubyLib.popupCategory("Author", authorContent)}
         ${JubyLib.popupCategory("Footer", footerContent)}
         <input type="text" placeholder="Message Content" class="EmbedSender-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" id="EmbedSender-mc">`;
 
-    JubyLib.popup("Send Embed", content, "Send", "auto", () => JubyLib.sendEmbed(document.getElementById("EmbedSender-cid").value, document.getElementById("EmbedSender-mc").value, document.getElementById("EmbedSender-etitle").value,
-        document.getElementById("EmbedSender-edesc").value, document.getElementById("EmbedSender-ecolor").value, document.getElementById("EmbedSender-eimage").value, {text: document.getElementById("EmbedSender-ftext").value, icon_url: document.getElementById("EmbedSender-fimage").value}));
+    JubyLib.popup("Send Embed", content, "Send", "auto", () => {
+        let embed = new JubyLib.Embed();
+        embed.title = document.getElementById("EmbedSender-etitle").value;
+        embed.description = document.getElementById("EmbedSender-edesc").value;
+        embed.color = document.getElementById("EmbedSender-ecolor").value;
+        embed.image = document.getElementById("EmbedSender-eimage").value;
+        embed.thumbnail = document.getElementById("EmbedSender-ethumb").value;
+        embed.setAuthor(document.getElementById("EmbedSender-atext").value, document.getElementById("EmbedSender-aimage").value);
+        embed.setFooter(document.getElementById("EmbedSender-ftext").value, document.getElementById("EmbedSender-fimage").value);
+        JubyLib.sendEmbed(document.getElementById("EmbedSender-cid").value, document.getElementById("EmbedSender-mc").value, embed);
+    });
 }
 
 function loadJL() {
@@ -36,15 +49,15 @@ function loadJL() {
 }
 
 function checkUpdate() {
-    JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", "Embed Sender", 0.1, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js");
+    JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", "Embed Sender", 0.11, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js");
 }
 
 module.exports = new Plugin({
-	name: "Embed Sender",
-	author: "Juby210#5831",
+    name: "Embed Sender",
+    author: "Juby210#5831",
     description: "Send embed as user account | Use at own risk!",
-	color: "#0000ff",
-	load: () => {
+    color: "#0000ff",
+    load: () => {
         try {
             if(!hasJubyLib) loadJL(); else checkUpdate();
         } catch(e) {loadJL();}
@@ -90,7 +103,7 @@ module.exports = new Plugin({
             document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
         }, 100); else document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
 	},
-	unload: () => {
+    unload: () => {
         const css = document.getElementById("EmbedSender-style");
         if(css) {
             document.head.removeChild(css);

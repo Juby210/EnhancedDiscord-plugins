@@ -16,7 +16,7 @@ Remove library from discord
 ### .sendMessage(channelId, content)
 Send message to channel
 
-### .sendEmbed(channelId, content, embedTitle, embedDescription, embedColor, embedImage, embedFooter = {text: "", icon_url: ""})
+### .sendEmbed(channelId, content, embed = new JubyLib.Embed())
 Send embed to channel
 
 ### .popup(title = "Awesome Popup", content = "", btnName = "OK", height = "auto", btnClickListener = () => {}, closePopupListener = () => {})
@@ -39,6 +39,37 @@ Get selected channel id
 ### .updatesModule: Object
 **.check(jsonUrl, pluginName, pluginVersion, pluginUrl)**: Check plugin update and show popup
 
+## JubyLib.Embed Class
+### Properties
+#### .title: String
+Title of embed
+
+#### .description: String
+Description of embed
+
+#### .color: String
+Hex color od embed without #
+
+#### .image: String
+Url of embed image
+
+#### .thumbnail: String
+Url of embed thumbnail
+
+#### .author: Object
+#### .footer: Object
+#### .fields: Array of objects
+
+### Methods
+#### .setAuthor(text = "", iconUrl = "")
+Set embed author
+
+#### .setFooter(text = "", iconUrl = "")
+Set embed footer
+
+#### .addField(name = "", value = "", inline = false)
+Add field
+
 ## hasJubyLib: Bool
 Check if JubyLib is added to discord
 
@@ -46,7 +77,7 @@ Check if JubyLib is added to discord
 ```js
 const Plugin = require("../plugin");
 let jlSrc = "https://juby.cf/jl/JubyLib.js";
-let jlVer = {min: 0.2, max: 0.29, tested: 0.2}; // min is min version supported; max is max version supported; tested is tested version
+let jlVer = {min: 0.21, max: 0.29, tested: 0.21}; // min is min version supported; max is max version supported; tested is tested version
 
 function loadJL() {
     let jl = document.createElement("script");
@@ -70,10 +101,10 @@ function checkUpdate() {
     JubyLib.updatesModule.check("http://localhost/example.json", "Example", 1.0, "http://localhost/example.js");
 }
 module.exports = new Plugin({
-	name: "Example for JubyLib",
-	author: "Juby210#5831",
+    name: "Example for JubyLib",
+    author: "Juby210#5831",
     description: "https://github.com/juby210-PL/EnhancedDiscord-plugins",
-	load: () => {
+    load: () => {
         try {
             if(!hasJubyLib) loadJL(); else checkUpdate();
         } catch(e) {loadJL();}

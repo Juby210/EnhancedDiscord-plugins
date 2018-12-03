@@ -172,7 +172,7 @@ window.JubyLib = {
     sendMessage(channelId, content) {
         findModule('sendClydeError').sendMessage(channelId, {content});
     },
-    sendEmbed(channelId, content, embedTitle, embedDescription, embedColor, embedImage, embedFooter = {text: "", icon_url: ""}) {
+    sendEmbed(channelId, content, embed) {
         let sb = findModule('createBotMessage');
         let sq = findModule('enqueue');
         let message = sb.createMessage(channelId, content);
@@ -185,11 +185,14 @@ window.JubyLib = {
                 tts: false,
                 nonce: message.id,
                 embed: {
-                    title: embedTitle,
-                    description: embedDescription,
-                    color: parseInt(embedColor, 16),
-                    image: {url: embedImage},
-                    footer: embedFooter
+                    title: embed.title,
+                    description: embed.description,
+                    color: parseInt(embed.color, 16),
+                    image: {url: embed.image},
+                    thumbnail: {url: embed.thumbnail},
+                    footer: embed.footer,
+                    author: embed.author,
+                    fields: embed.fields
                 }
             }
         });
@@ -248,7 +251,7 @@ window.JubyLib = {
             }`;
 
         return `<div class="category-title ${ED.classMaps.headers.size16} titleDefault-a8-ZSr title-31JmR4 marginReset-236NPn weightMedium-2iZe9B height24-3XzeJx flexChild-faoVW3" id="category-${name2}" onclick='${sc}'>${defaultHidden ? ">" : "˅"} ${name}</div>
-            <div class="category-content ${ED.classMaps.headers.size14} titleDefault-a8-ZSr title-31JmR4 marginReset-236NPn weightMedium-2iZe9B height24-3XzeJx flexChild-faoVW3" id="category-${name2}-c" style="visibility: ${defaultHidden ? "hidden; height: 0px;" : "visible;"}">
+            <div class="category-content ${ED.classMaps.headers.size14} JL-title marginReset-236NPn weightMedium-2iZe9B height24-3XzeJx flexChild-faoVW3" id="category-${name2}-c" style="visibility: ${defaultHidden ? "hidden; height: 0px;" : "visible;"}">
                 ${content}
             </div>`;
     },
@@ -283,7 +286,7 @@ window.JubyLib = {
     },
     updatesModule: {}
 }
-window.JubyLib.version.v = 0.2;
+window.JubyLib.version.v = 0.21;
 window.JubyLib.version.name = `BETA ${window.JubyLib.version.v}`;
 window.JubyLib.updatesModule.check = (jsonUrl, pluginName, pluginVersion, pluginUrl) => {
     $.ajax({
@@ -301,3 +304,29 @@ window.JubyLib.updatesModule.check = (jsonUrl, pluginName, pluginVersion, plugin
     });
 };
 window.hasJubyLib = true;
+
+/* Classes */
+
+window.JubyLib.Embed = class JubyLibEmbed {
+    constructor() {
+        this.title = "";
+        this.description = "";
+        this.color = "";
+        this.image = "";
+        this.thumbnail = "";
+        this.footer = {text: "", icon_url: ""};
+        this.author = {name: "", icon_url: ""};
+        this.fields = [];
+    }
+    setFooter(text = "", iconUrl = "") {
+        this.footer.text = text;
+        this.footer.icon_url = iconUrl;
+    }
+    setAuthor(text = "", iconUrl = "") {
+        this.author.name = text;
+        this.author.icon_url = iconUrl;
+    }
+    addField(name = "", value = "", inline = false) {
+        this.fields.push({name, value, inline});
+    }
+}
