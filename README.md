@@ -16,3 +16,5 @@ By clicking `Ctrl+B` you hide all themes.
 
 ## Embed Sender
 Send embed as user account. Use at own risk! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js)
+
+![Embed Sender](https://i.imgur.com/ZZwhF86.png)
