@@ -136,6 +136,8 @@ window.JubyLibCSS = `#JubyLib-container h2.ui-form-title {
 }
 #JubyLib-container .category-content {
     margin-bottom: 10px;
+    margin-left: 6px;
+    margin-right: 6px;
 }
 .JL-title {
     color: #f6f6f7;
@@ -148,7 +150,7 @@ window.JubyLibCSS = `#JubyLib-container h2.ui-form-title {
  * @example
  * const Plugin = require("../plugin");
  * let jlSrc = "https://juby.cf/jl/JubyLib.js";
- * let jlVer = {min: 0.22, max: 0.29, tested: 0.22}; // min is min version supported; max is max version supported; tested is tested version
+ * let jlVer = {min: 0.23, max: 0.29, tested: 0.23}; // min is min version supported; max is max version supported; tested is tested version
  *
  *  function loadJL() {
  *      let jl = document.createElement("script");
@@ -192,7 +194,7 @@ window.JubyLib = {
  * @copyright © Juby210 2018
  * @license Apache2
  * @author Juby210
- * @version 0.22
+ * @version 0.23
  */
 
 /* Classes */
@@ -499,7 +501,7 @@ window.JubyLib.updatesModule.check = (jsonUrl, pluginName, pluginVersion, plugin
  * @property {double} v - JubyLib version number (e.g. 0.1 0.11 0.2)
  * @property {string} name - JubyLib version name (e.g. BETA 0.1)
  */
-window.JubyLib.version.v = 0.21;
+window.JubyLib.version.v = 0.23;
 window.JubyLib.version.name = `BETA ${window.JubyLib.version.v}`;
 /**
  * @namespace hasJubyLib
