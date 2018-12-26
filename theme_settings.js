@@ -144,15 +144,17 @@ module.exports = new Plugin({
                 }
             }
 
-            monkeyPatch( findModule('getUserSettingsSections').default.prototype, 'render', function() {
+            monkeyPatch(findModule('getUserSettingsSections').default.prototype, 'render', function() {
                 if(document.getElementById("ed-ttab")) return arguments[0].callOriginalMethod(arguments[0].methodArguments);
-                const tabsM = findModule('itemSelected');
-                let header = document.getElementsByClassName(tabsM.header + ' ed-settings')[0];
-                if(header) {
-                    addTab(header, tabsM);
-                } else {
-                    setTimeout(() => {addTab(header, tabsM)}, 10);
-                }
+                setTimeout(() => {
+                    const tabsM = findModule('itemSelected');
+                    let header = document.getElementsByClassName(tabsM.header + ' ed-settings')[0];
+                    if(header) {
+                        addTab(header, tabsM);
+                    } else {
+                        setTimeout(() => {addTab(header, tabsM)}, 10);
+                    }
+                }, 10);
                 return arguments[0].callOriginalMethod(arguments[0].methodArguments);
             });
         });
