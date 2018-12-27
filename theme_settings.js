@@ -61,19 +61,16 @@ function toggle(file) {
 }
 
 function writeConfig() {
-    fs.writeFile(path.join(process.env.injDir, "plugins", "theme_settings.json"), JSON.stringify(config));
+    fs.writeFileSync(path.join(process.env.injDir, "plugins", "theme_settings.json"), JSON.stringify(config));
 }
 
 function readConfig() {
     let configp = path.join(process.env.injDir, "plugins", "theme_settings.json");
     return new Promise((resolve, reject) => {
-        fs.exists(configp, ex => {
-            if(!ex) fs.open(configp, 'w', err => {});
-            fs.readFile(configp, (err, data) => {
-                if(data == '') return resolve("{}");
-                resolve(data);
-            });
-        });
+        if(!fs.existsSync(configp)) fs.openSync(configp, "w");
+        let data = fs.readFileSync(configp);
+        if(data == '') return resolve("{}");
+        resolve(data);
     });
 }
 
@@ -127,12 +124,12 @@ const addTab = (header, tabsM) => {
 }
 
 module.exports = new Plugin({
-	name: "Theme Settings",
-	author: "Juby210#5831",
+    name: "Theme Settings",
+    author: "Juby210#2100",
     description: "Adds Themes tab to EnhancedDiscord",
     preload: true,
-	color: "#f44336",
-	load: () => {
+    color: "#f44336",
+    load: () => {
         if(!fs.existsSync(themesDir)) fs.mkdirSync(themesDir);
         readConfig().then(cfg => {
             config = JSON.parse(cfg);
@@ -177,7 +174,7 @@ module.exports = new Plugin({
             }
         }
 	},
-	unload: () => {
+    unload: () => {
         findModule('getUserSettingsSections').default.prototype.render.unpatch();
         unloadallCSS();
         document.onkeyup = null;
