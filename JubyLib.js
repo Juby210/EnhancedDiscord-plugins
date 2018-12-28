@@ -258,7 +258,7 @@ window.JubyLib.Embed = class JubyLibEmbed {
 /**
  * Init library
  */
-window.JubyLib.load = () => {
+window.JubyLib.load = async () => {
     var hasJQuery = false;
     try{
         if(!jQuery) {} else hasJQuery = true;
@@ -267,7 +267,10 @@ window.JubyLib.load = () => {
         var jq = document.createElement("script");
         jq.id = "JubyLib-jQuery";
         jq.src = `https://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js`;
-        document.head.appendChild(jq);
+        await new Promise(resolve => {
+            jq.onload = resolve;
+            document.head.appendChild(jq);
+        });
     }
     var csse = document.createElement("style");
     csse.id = "JubyLib-style";
@@ -501,7 +504,7 @@ window.JubyLib.updatesModule.check = (jsonUrl, pluginName, pluginVersion, plugin
  * @property {double} v - JubyLib version number (e.g. 0.1 0.11 0.2)
  * @property {string} name - JubyLib version name (e.g. BETA 0.1)
  */
-window.JubyLib.version.v = 0.23;
+window.JubyLib.version.v = 0.231;
 window.JubyLib.version.name = `BETA ${window.JubyLib.version.v}`;
 /**
  * @namespace hasJubyLib
