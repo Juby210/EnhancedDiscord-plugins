@@ -19,6 +19,9 @@ Send embed as user account. Use at own risk! | [Download](https://raw.githubuser
 
 ![Embed Sender](https://i.imgur.com/ZZwhF86.png)
 
+## Spotify Crack
+Spotify listen along without premium! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/spotify_crack.js)
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
