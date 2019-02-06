@@ -1,9 +1,9 @@
 const Plugin = require('../plugin');
 
 module.exports = new Plugin({
-    name: 'Mutal Guilds Counter',
+    name: 'Mutual Guilds Counter',
     author: 'Juby210#2100',
-    description: 'Mutal guilds counter',
+    description: 'Mutual guilds counter',
     color: 'aqua',
 
     load: () => {
