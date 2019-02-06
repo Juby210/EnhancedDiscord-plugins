@@ -22,6 +22,11 @@ Send embed as user account. Use at own risk! | [Download](https://raw.githubuser
 ## Spotify Crack
 Spotify listen along without premium! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/spotify_crack.js)
 
+## Mutal Guilds Counter
+Mutal guilds counter | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/mutal_guilds_counter.js)
+
+![Counter](https://i.imgur.com/TtSpowI.png)
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
