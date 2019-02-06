@@ -27,7 +27,7 @@ Mutual guilds counter | [Download](https://raw.githubusercontent.com/juby210-PL/
 
 ![Counter](https://i.imgur.com/TtSpowI.png)
 
-## Mutual Guilds Counter
+## Mutual Friends Counter
 Mutual friends counter | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/mutual_friends_counter.js)
 
 ![Counter](https://i.imgur.com/4PjfsN6.png)
