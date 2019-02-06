@@ -34,6 +34,8 @@ function check(scroller, el) {
 function cont(scroller) {
     let count = Array.from(scroller.getElementsByClassName("listRow-hutiT_")).length;
     let elm = Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2];
-    if(elm.innerText.includes(count)) return;
+    if(elm.innerText.includes(" [") && elm.innerText.includes("]")) {
+        elm.innerText = elm.innerText.split(" [")[0];
+    }
     elm.innerText += ` [${count}]`;
 }
