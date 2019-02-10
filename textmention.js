@@ -1,5 +1,6 @@
 const Plugin = require('../plugin');
 const mentionlist = ["a", "b"];
+const ignoreself = true;
 
 module.exports = new Plugin({
     name: 'Text Mention',
@@ -15,6 +16,7 @@ module.exports = new Plugin({
             let a = b.methodArguments[0];
             if(a.type != at.MESSAGE_CREATE) return b.callOriginalMethod(b.methodArguments);
 
+            if(ignoreself && checkAuthor(a.message)) return b.callOriginalMethod(b.methodArguments);
             let hm = false;
             mentionlist.forEach(mw => {
                 if(a.message.content.includes(mw)) hm = true;
@@ -24,6 +26,7 @@ module.exports = new Plugin({
         });
         monkeyPatch(findModule('isMentioned'), 'isMentioned', b => {
             let m = b.methodArguments[0];
+            if(ignoreself && checkAuthor(m)) return b.callOriginalMethod(b.methodArguments);
             let hm = false;
             mentionlist.forEach(mw => {
                 if(m.content.includes(mw)) hm = true;
@@ -39,3 +42,8 @@ module.exports = new Plugin({
         if(c.__monkeyPatched) c.unpatch();
     }
 });
+
+function checkAuthor(msg) {
+    if(msg.author.id == findModule('getCurrentUser').getCurrentUser().id) return true;
+    return false;
+}
