@@ -25,12 +25,15 @@ Spotify listen along without premium! | [Download](https://raw.githubusercontent
 ## Mutual Guilds Counter
 Mutual guilds counter | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/mutual_guilds_counter.js)
 
-![Counter](https://i.imgur.com/TtSpowI.png)
-
 ## Mutual Friends Counter
 Mutual friends counter | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/mutual_friends_counter.js)
 
 ![Counter](https://i.imgur.com/4PjfsN6.png)
+
+## Text Mention
+Mention you when your username is in message content | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/textmention.js)
+
+Change `mentionlist` to your words.
 
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
