@@ -33,7 +33,7 @@ Mutual friends counter | [Download](https://raw.githubusercontent.com/juby210-PL
 ## Text Mention
 Mention you when your username is in message content | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/textmention.js)
 
-Change `mentionlist` to your words.
+Change mention list in plugin settings
 
 ## Full Timestamps
 My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
