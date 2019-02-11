@@ -9,20 +9,27 @@ module.exports = new Plugin({
 
     load: () => {
         inter = setInterval(() => {
-            $('.timestampCozy-2hLAPV').each((i,e) => {
+            $('.'+findModule('timestampCozy').timestampCozy.split(' ')[0]).each((i,e) => {
                 if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
                 let dat = new Date($(e).attr('datetime')).toLocaleString();
                 if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
                 $(e).html(dat);
                 $(e).addClass('full-timestamps');
             });
-            $('.edited-DL9ECl').each((i,e) => {
+            $('.'+findModules('timestamp')[3].timestamp.split(' ')[0]).each((i,e) => {
+                if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
+                let dat = new Date($(e).attr('datetime')).toLocaleString();
+                if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
+                $(e).html(dat);
+                $(e).addClass('full-timestamps');
+            });
+            $('.'+findModule('edited').edited.split(' ')[0]).each((i,e) => {
                 if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
                 let dat = new Date($(e).attr('datetime')).toLocaleString();
                 if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
                 $(e).on('mouseenter', () => {
                     setTimeout(() => {
-                        $('.tooltip-1OS-Ti').html(dat);
+                        $('.'+findModules('tooltip')[1].tooltip.split(' ')[0]).html(dat);
                     }, 1);
                 });
                 $(e).addClass('full-timestamps');
