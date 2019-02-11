@@ -35,6 +35,9 @@ Mention you when your username is in message content | [Download](https://raw.gi
 
 Change `mentionlist` to your words.
 
+## Full Timestamps
+My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
