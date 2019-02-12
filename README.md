@@ -38,6 +38,11 @@ Change mention list in plugin settings
 ## Full Timestamps
 My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
 
+## Own Messages
+Create your own messages for discord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/own_messages.js)
+
+To change messages change `own_messages.json`. To search messages browse `own_messages.all.json`.
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
