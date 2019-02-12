@@ -40,6 +40,9 @@ Create your own messages for discord | [Download](https://raw.githubusercontent.
 
 To change messages change `own_messages.json`. To search messages browse `own_messages.all.json`.
 
+## Star Option
+Star option in message options | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/staroption.js)
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
