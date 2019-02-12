@@ -35,9 +35,6 @@ Mention you when your username is in message content | [Download](https://raw.gi
 
 Change mention list in plugin settings
 
-## Full Timestamps
-My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
-
 ## Own Messages
 Create your own messages for discord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/own_messages.js)
 
@@ -47,3 +44,11 @@ To change messages change `own_messages.json`. To search messages browse `own_me
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
 ![Binary Converter](https://i.imgur.com/rajxOSi.png)
+
+
+# Remaked plugins
+## Full Timestamps
+My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
+
+## BetterSearchPage
+My remake of [BetterSearchPage](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/BetterSearchPage) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/betterSearchPage.js)
