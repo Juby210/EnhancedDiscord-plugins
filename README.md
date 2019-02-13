@@ -11,7 +11,6 @@ Note that all themes should be in: `<EDPATH>/themes` (auto create this folder on
 
 Supported all bd themes.
 
-![Theme Settings](https://i.imgur.com/ApxQkhj.gif)
 By clicking `Ctrl+B` you hide all themes.
 
 ## Embed Sender
@@ -42,6 +41,13 @@ To change messages change `own_messages.json`. To search messages browse `own_me
 
 ## Star Option
 Star option in message options | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/staroption.js)
+
+## Account Switcher
+Lets you switch between multiple Discord accounts | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/account_switcher.js)
+
+Add accounts in plugin settings
+
+![Preview](https://i.imgur.com/KkH0Sga.png)
 
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
