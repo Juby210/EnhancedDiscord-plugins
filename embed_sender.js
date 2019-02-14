@@ -1,6 +1,5 @@
 const Plugin = require("../plugin");
-let jlSrc = "https://juby.cf/jl/JubyLib.js";
-let jlVer = {min: 0.21, max: 0.29, tested: 0.22};
+let JubyLib;
 
 function createWindow() {
     const addNewFieldBtn = `<button id="EmbedSender-addNewFieldBtn" type="button" class="button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 sizeMin-1mJd1x grow-q77ONN"><div class="contents-18-Yxp">Add new field</div></button>`;
@@ -52,38 +51,14 @@ function createWindow() {
     });
 }
 
-function loadJL() {
-    let jl = document.createElement("script");
-    jl.id = "JubyLib-script";
-    jl.src = jlSrc;
-    document.head.appendChild(jl);
-
-    jl.onload = () => {
-        if(jlVer.max <= JubyLib.version.v || (jlVer.min >= JubyLib.version.v && jlVer.min != JubyLib.version.v)) {
-            jlSrc = `https://juby.cf/jl/JubyLib-${jlVer.tested}.js`;
-            JubyLib.unload();
-            loadJL();
-        } else {
-            JubyLib.load();
-            checkUpdate();
-        }
-    };
-}
-
-function checkUpdate() {
-    JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", "Embed Sender", 1.0, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js");
-}
-
 module.exports = new Plugin({
     name: "Embed Sender",
     author: "Juby210#5831",
     description: "Send embed as user account | Use at own risk!",
     color: "#0000ff",
-    load: () => {
-        try {
-            if(!hasJubyLib) loadJL(); else checkUpdate();
-        } catch(e) {loadJL();}
+    version: 1.1,
 
+    load: async () => {
         const embedSenderStyle = `
 			#EmbedSender-button {
 				cursor: pointer;
@@ -111,7 +86,7 @@ module.exports = new Plugin({
 		css.innerHTML = embedSenderStyle;
         document.head.append(css);
 
-        const friendsOnline = window.findModule("friendsOnline").friendsOnline;
+        const friendsOnline = window.findModule("friendsOnline").friendsOnline.split(' ')[0];
         const guildClasses = window.findModule("guildsWrapper");
         const button = document.createElement("div");
 		button.id = "EmbedSender-button";
@@ -121,9 +96,13 @@ module.exports = new Plugin({
             createWindow();
         });
 
-        if (!document.querySelector(`.${guildClasses.guildSeparator}`)) setTimeout(() => {
-            document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
-        }, 100); else document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
+        await module.exports.loadLib();
+
+        if (!document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`)) setTimeout(() => {
+            document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`).insertAdjacentElement("afterend", button);
+        }, 100); else document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`).insertAdjacentElement("afterend", button);
+
+        JubyLib.updatesModule.checkUpdate("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", module.exports, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js");
 	},
     unload: () => {
         const css = document.getElementById("EmbedSender-style");
@@ -134,5 +113,14 @@ module.exports = new Plugin({
         if(button) {
             button.parentElement.removeChild(button);
         }
+    },
+
+    loadLib: () => {
+        return new Promise((resolve, reject) => {
+            require('request')({url:`https://juby210-pl.github.io/EnhancedDiscord-plugins/lib/JubyLib.js`},(err,res,body)=> {
+                JubyLib = eval(body);
+                resolve();
+            });
+        });
     }
 });

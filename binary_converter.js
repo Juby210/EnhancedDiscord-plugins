@@ -1,6 +1,4 @@
 const Plugin = require("../plugin");
-let jlSrc = "https://juby.cf/jl/JubyLib.js";
-let jlVer = {min: 0.21, max: 0.29, tested: 0.231};
 let live = false;
 
 function BinToText(bin) {
@@ -30,38 +28,14 @@ function TextToBin(text) {
     return r;
 }
 
-function loadJL() {
-    let jl = document.createElement("script");
-    jl.id = "JubyLib-script";
-    jl.src = jlSrc;
-    document.head.appendChild(jl);
-
-    jl.onload = () => {
-        if(jlVer.max <= JubyLib.version.v || (jlVer.min >= JubyLib.version.v && jlVer.min != JubyLib.version.v)) {
-            jlSrc = `https://juby.cf/jl/JubyLib-${jlVer.tested}.js`;
-            JubyLib.unload();
-            loadJL();
-        } else {
-            JubyLib.load();
-            checkUpdate();
-        }
-    };
-}
-
-function checkUpdate() {
-    JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", "Binary Converter", 1.0, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js");
-}
-
 module.exports = new Plugin({
     name: "Binary converter",
     author: "Juby210#2100",
     description: "Binary converter",
     color: "#0000ff",
-    load: () => {
-        try {
-            if(!hasJubyLib) loadJL(); else checkUpdate();
-        } catch(e) {loadJL();}
+    version: 1.1,
 
+    load: async () => {
         const style = `
 			#bc-button {
 				cursor: pointer;
@@ -89,7 +63,7 @@ module.exports = new Plugin({
 		css.innerHTML = style;
         document.head.append(css);
 
-        const friendsOnline = window.findModule("friendsOnline").friendsOnline;
+        const friendsOnline = window.findModule("friendsOnline").friendsOnline.split(' ')[0];
         const guildClasses = window.findModule("guildsWrapper");
         const button = document.createElement("div");
 		button.id = "bc-button";
@@ -97,7 +71,6 @@ module.exports = new Plugin({
         button.classList.add(friendsOnline);
         button.addEventListener("click", () => {
             const cb = window.ED.classMaps.checkbox;
-            const sw = window.ED.classMaps.switchItem;
             const content = `Bin to text:
                 <textarea placeholder="Bin" class="JL-input inputDefault-_djjkz input-cIJ7To size14-3iUx6q" style="resize: none; height: 70px;" id="bc-bin1" />
                 <center><button id="bc-convert1" type="button" class="bc-b button-38aScr lookFilled-1Gx00P colorBrand-3pXr91 size16-14cGz5 grow-q77ONN">Convert</button></center>
@@ -131,9 +104,11 @@ module.exports = new Plugin({
             });
         });
 
-        if (!document.querySelector(`.${guildClasses.guildSeparator}`)) setTimeout(() => {
-            document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
-        }, 100); else document.querySelector(`.${guildClasses.guildSeparator}`).insertAdjacentElement("afterend", button);
+        await module.exports.loadLib();
+
+        if (!document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`)) setTimeout(() => {
+            document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`).insertAdjacentElement("afterend", button);
+        }, 100); else document.querySelector(`.${guildClasses.guildSeparator.split(' ')[0]}`).insertAdjacentElement("afterend", button);
 
         monkeyPatch(findModule('post'), 'post', function (b) {
             if(!b.methodArguments[0].url || !live) return b.callOriginalMethod(b.methodArguments);
@@ -142,6 +117,8 @@ module.exports = new Plugin({
             }
             return b.callOriginalMethod(b.methodArguments);
         });
+
+        JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", module.exports, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js");
 	},
     unload: () => {
         if(findModule('post').post.__monkeyPatched) findModule('post').post.unpatch();
@@ -153,5 +130,14 @@ module.exports = new Plugin({
         if(button) {
             button.parentElement.removeChild(button);
         }
+    },
+
+    loadLib: () => {
+        return new Promise((resolve, reject) => {
+            require('request')({url:`https://juby210-pl.github.io/EnhancedDiscord-plugins/lib/JubyLib.js`},(err,res,body)=> {
+                JubyLib = eval(body);
+                resolve();
+            });
+        });
     }
 });
