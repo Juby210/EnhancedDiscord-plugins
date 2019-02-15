@@ -101,6 +101,7 @@ module.exports = new Plugin({
                 ${list}
             </div>
             <div style="margin-top:5px">
+                <button type="button" id="accswitcher-addthisac" class="${btn.button} ${btn.sizeMin} ${btn.grow} ${btn.lookFilled} ${btn.colorBrand}" style="width:150px;display:inline-block"><div class="contents-18-Yxp">Add this account</div></button>
                 <button type="button" id="accswitcher-addac" class="${btn.button} ${btn.sizeMin} ${btn.grow} ${btn.lookFilled} ${btn.colorBrand}" style="width:100px;display:inline-block"><div class="contents-18-Yxp">Add account</div></button>
                 <button type="button" id="accswitcher-save" class="${btn.button} ${btn.sizeMin} ${btn.grow} ${btn.lookFilled} ${btn.colorBrand}" style="width:100px;display:inline-block"><div class="contents-18-Yxp">Save</div></button>   
             </div>
@@ -137,6 +138,15 @@ module.exports = new Plugin({
             if(ac.tagName == 'BUTTON') ac = ac.parentElement;
             ac.parentElement.removeChild(ac);
         },
+        addthisac: e => {
+            const inp = findModule('input');
+            const btn = findModule('button');
+            let s = $('#accswitcher-settings');
+            let buttons = `<button type="button" class="${btn.button} ${btn.sizeMin} ${btn.grow} ${btn.lookFilled} ${btn.colorBrand} accswitcher-acc-rem" style="float:right;display:inline-block"><div class="contents-18-Yxp">Remove</div></button><button type="button" class="${btn.button} ${btn.sizeMin} ${btn.grow} ${btn.lookFilled} ${btn.colorBrand} accswitcher-acc-cte" style="float:right;display:inline-block"><div class="contents-18-Yxp">Change to email</div></button>`;
+            let list = `<div class="accswitcher-acc" style="margin-top:5px"><input type="text" placeholder="Name" value="${findModule("getCurrentUser").getCurrentUser().username}" class="${inp.inputDefault} accswitcher-acc-name" style="width:100px;display:inline-block"><input type="password" placeholder="Token" value="${findModule('getToken').getToken()}" class="${inp.inputDefault} accswitcher-acc-token" style="display:inline-block;width:500px"><br>${buttons}</div><br>`;
+            $(s).find('#accswitcher-slist').append(list);
+            module.exports.addListeners($(s).find('#accswitcher-slist').find('.accswitcher-acc').last());
+        },
         addac: e => {
             const inp = findModule('input');
             const btn = findModule('button');
@@ -167,6 +177,7 @@ module.exports = new Plugin({
         $(a).find('.accswitcher-acc-cte').click(module.exports.listeners.cte);
         $(a).find('.accswitcher-acc-ctt').click(module.exports.listeners.ctt);
         $(a).find('.accswitcher-acc-rem').click(module.exports.listeners.rem);
+        $(a).find('#accswitcher-addthisac').click(module.exports.listeners.addthisac);
         $(a).find('#accswitcher-addac').click(module.exports.listeners.addac);
         $(a).find('#accswitcher-save').click(module.exports.listeners.save);
     },
