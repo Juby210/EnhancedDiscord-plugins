@@ -1,4 +1,5 @@
 const Plugin = require('../plugin');
+const {loadData, saveData} = EDApi;
 
 module.exports = new Plugin({
     name: 'Text Mention',
@@ -9,18 +10,18 @@ module.exports = new Plugin({
     load: () => {
         const at = findModule('ActionTypes').ActionTypes;
         const s = findModule('default');
-        let settings = module.exports.settings;
+        let settings = module.exports.sets = {ignoreself: loadData(module.exports.id, "ignoreself"), ignorebots: loadData(module.exports.id, "ignorebots"), mentionlist: loadData(module.exports.id, "mentionlist")};
         let conf = module.exports.config;
 
-        settings.ignoreself = EDApi.loadData(module.exports.id, "ignoreself");
-        settings.ignorebots = EDApi.loadData(module.exports.id, "ignorebots");
-        settings.mentionlist = EDApi.loadData(module.exports.id, "mentionlist");
+        if(!settings.mentionlist) settings.mentionlist = conf.mentionlist;
+        if(settings.ignoreself == undefined) settings.ignoreself = conf.ignoreself;
+        if(settings.ignorebots == undefined) settings.ignorebots = conf.ignorebots;
 
         monkeyPatch(s.default, 'dirtyDispatch', b => {
             let a = b.methodArguments[0];
             if(a.type != at.MESSAGE_CREATE) return b.callOriginalMethod(b.methodArguments);
 
-            if(checkAuthor(a.message)) return b.callOriginalMethod(b.methodArguments);
+            if(module.exports.checkAuthor(a.message)) return b.callOriginalMethod(b.methodArguments);
             let mentionlist = settings.mentionlist == undefined ? conf.mentionlist : settings.mentionlist;
             let hm = false;
             mentionlist.forEach(mw => {
@@ -31,7 +32,7 @@ module.exports = new Plugin({
         });
         monkeyPatch(findModule('isMentioned'), 'isMentioned', b => {
             let m = b.methodArguments[0];
-            if(checkAuthor(m)) return b.callOriginalMethod(b.methodArguments);
+            if(module.exports.checkAuthor(m)) return b.callOriginalMethod(b.methodArguments);
             let mentionlist = settings.mentionlist == undefined ? conf.mentionlist : settings.mentionlist;
             let hm = false;
             mentionlist.forEach(mw => {
@@ -53,6 +54,7 @@ module.exports = new Plugin({
         ignoreself: true,
         ignorebots: true
     },
+    sets: {},
 
     generateSettings: () => {
         const h = window.ED.classMaps.headers;
@@ -61,11 +63,10 @@ module.exports = new Plugin({
         const cb = window.ED.classMaps.checkbox;
         const inp = findModule('input');
         const btn = findModule('button');
-        const settings = module.exports.settings;
-        const conf = module.exports.config;
-        const ignoreself = settings.ignoreself == undefined ? conf.ignoreself : settings.ignoreself;
-        const ignorebots = settings.ignorebots == undefined ? conf.ignorebots : settings.ignorebots;
-        const mentionlist = settings.mentionlist == undefined ? conf.mentionlist : settings.mentionlist;
+        const settings = module.exports.sets;
+        const ignoreself = settings.ignoreself;
+        const ignorebots = settings.ignorebots;
+        const mentionlist = settings.mentionlist;
 
         let list = '';
         mentionlist.forEach(word => {
@@ -105,7 +106,7 @@ module.exports = new Plugin({
             type: 'click',
             eHandler: e => {
                 const cbM = window.ED.classMaps.checkbox;
-                let s = module.exports.settings;
+                let s = module.exports.sets;
                 if(e.target.value == 'on') {
                     e.target.parent().className = e.target.parent().className.replace(cbM.valueChecked, cbM.valueUnchecked);
                     e.target.value = 'off';
@@ -115,7 +116,7 @@ module.exports = new Plugin({
                     e.target.value = 'on';
                     s.ignoreself = true;
                 }
-                EDApi.saveData(module.exports.id, 'ignoreself', s.ignoreself);
+                saveData(module.exports.id, 'ignoreself', s.ignoreself);
             }
         },
         {
@@ -123,7 +124,7 @@ module.exports = new Plugin({
             type: 'click',
             eHandler: e => {
                 const cbM = window.ED.classMaps.checkbox;
-                let s = module.exports.settings;
+                let s = module.exports.sets;
                 if(e.target.value == 'on') {
                     e.target.parent().className = e.target.parent().className.replace(cbM.valueChecked, cbM.valueUnchecked);
                     e.target.value = 'off';
@@ -133,44 +134,44 @@ module.exports = new Plugin({
                     e.target.value = 'on';
                     s.ignorebots = true;
                 }
-                EDApi.saveData(module.exports.id, 'ignorebots', s.ignorebots);
+                saveData(module.exports.id, 'ignorebots', s.ignorebots);
             }
         },
         {
             el: '#textmention-addword-btn',
             type: 'click',
             eHandler: e => {
-                document.getElementById("textmention-ml").innerHTML += `<input type="text" value="word" class="${findModule('input').inputDefault} textmention-mentionlist" style="margin-top:5px"><br>\n`;
+                $('#textmention-ml').append(`<input type="text" value="word" class="${findModule('input').inputDefault} textmention-mentionlist" style="margin-top:5px"><br>\n`);
             }
         },
         {
             el: '#textmention-savelist-btn',
             type: 'click',
             eHandler: e => {
-                let s = module.exports.settings;
+                let s = module.exports.sets;
                 let list = [];
                 $('.textmention-mentionlist').each((i,el) => {
                     if($(el).val() == '') return;
                     list.push($(el).val());
                 });
                 s.mentionlist = list;
-                EDApi.saveData(module.exports.id, 'mentionlist', list);
+                saveData(module.exports.id, 'mentionlist', list);
+                module.exports.reload();
             }
         }
-    ]
+    ],
+
+    checkAuthor: msg => {
+        const getu = findModule('getUser').getUser;
+        const user = findModule('getCurrentUser').getCurrentUser();
+        const settings = module.exports.sets;
+        const ignoreself = settings.ignoreself;
+        const ignorebots = settings.ignorebots;
+        const usertocheck = getu(msg.author.id);
+    
+        if(ignoreself && msg.author.id == user.id) return true;
+        if(!usertocheck) return false;
+        if(ignorebots && usertocheck.bot) return true;
+        return false;
+    }
 });
-
-function checkAuthor(msg) {
-    const getu = findModule('getUser').getUser;
-    const user = findModule('getCurrentUser').getCurrentUser();
-    const settings = module.exports.settings;
-    const conf = module.exports.config;
-    const ignoreself = settings.ignoreself == undefined ? conf.ignoreself : settings.ignoreself;
-    const ignorebots = settings.ignorebots == undefined ? conf.ignorebots : settings.ignorebots;
-    const usertocheck = getu(msg.author.id);
-
-    if(ignoreself && msg.author.id == user.id) return true;
-    if(!usertocheck) return false;
-    if(ignorebots && usertocheck.bot) return true;
-    return false;
-}

@@ -1,9 +1,6 @@
 # EnhancedDiscord Plugins
 Plugins for EnhancedDiscord.
 
-## JubyLib
-Juby210's Plugin Library | No download required | [Docs](https://github.com/juby210-PL/EnhancedDiscord-plugins/blob/master/JubyLib.md)
-
 ## Theme Settings
 Adds Themes tab to EnhancedDiscord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/theme_settings.js)
 
