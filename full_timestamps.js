@@ -9,20 +9,20 @@ module.exports = new Plugin({
 
     load: () => {
         inter = setInterval(() => {
-            $('.'+findModule('timestampCozy').timestampCozy.split(' ')[0]).each((i,e) => {
-                if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
-                let dat = new Date($(e).attr('datetime')).toLocaleString();
-                if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
-                $(e).html(dat);
-                $(e).addClass('full-timestamps');
+            let timestamps = [];
+            timestamps.push(findModule('timestampCozy').timestampCozy.split(' ')[0]);
+            findModules('timestamp').forEach(t=>timestamps.push(t.timestamp.split(' ')[0]));
+
+            timestamps.forEach(timestamp => {
+                $('.'+timestamp).each((i,e) => {
+                    if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
+                    let dat = new Date($(e).attr('datetime')).toLocaleString();
+                    if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
+                    $(e).html(dat);
+                    $(e).addClass('full-timestamps');
+                });
             });
-            $('.'+findModules('timestamp')[3].timestamp.split(' ')[0]).each((i,e) => {
-                if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
-                let dat = new Date($(e).attr('datetime')).toLocaleString();
-                if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
-                $(e).html(dat);
-                $(e).addClass('full-timestamps');
-            });
+
             $('.'+findModule('edited').edited.split(' ')[0]).each((i,e) => {
                 if($(e).hasClass('full-timestamps') || !$(e).attr('datetime')) return;
                 let dat = new Date($(e).attr('datetime')).toLocaleString();

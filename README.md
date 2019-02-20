@@ -1,6 +1,9 @@
 # EnhancedDiscord Plugins
 Plugins for EnhancedDiscord.
 
+### Information
+These plugins may require to enable `BD Plugins` in ed settings because using jQuery, so enable it and reload discord if not working.
+
 ## Theme Settings
 Adds Themes tab to EnhancedDiscord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/theme_settings.js)
 
