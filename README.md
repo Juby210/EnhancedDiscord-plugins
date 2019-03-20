@@ -49,6 +49,9 @@ Add accounts in plugin settings
 
 ![Preview](https://i.imgur.com/KkH0Sga.png)
 
+## @all
+Mention all members when @all | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/at_all.js)
+
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
