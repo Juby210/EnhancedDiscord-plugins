@@ -23,7 +23,7 @@ module.exports = new Plugin({
         let cnt = findModules('getState')[1].getState().onlineFriends.size;
         if (onlineCount) {
             onlineCount.innerHTML = cnt + ' Online';
-            return b.callOriginalMethod(b.methodArguments);
+            return;
         }
         let gs = document.querySelector(`.${guildSep.split(' ')[0]}`);
         if (gs) {
