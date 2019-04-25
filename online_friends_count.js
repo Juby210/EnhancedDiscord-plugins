@@ -1,24 +1,18 @@
 const Plugin = require('../plugin');
+let inter;
 
 module.exports = new Plugin({
     name: 'Online Friends Count',
     author: 'Juby210#2100',
-    description: "Adds the number of online friends in right above the list.",
+    description: "Adds the number of online friends in right above the list",
     color: 'indigo',
 
     load: () => {
-        const at = findModule('ActionTypes').ActionTypes;
-        const s = findModule('default');
-
-        monkeyPatch(s.default, 'dispatch', b => {
-            if(b.methodArguments[0].type == at.PRESENCE_UPDATE) module.exports.update();
-            return b.callOriginalMethod(b.methodArguments);
-        });
+        inter = setInterval(() => module.exports.update(), 10000);
         module.exports.update()
     },
     unload: () => {
-        let m = findModule('default').default.dispatch;
-        if(m.__monkeyPatched) m.unpatch();
+        if(inter != undefined) clearInterval(inter);
     },
 
     update: () => {
