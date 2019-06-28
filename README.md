@@ -16,7 +16,7 @@ By clicking `Ctrl+B` you hide all themes.
 ## Embed Sender
 Send embed as user account. Use at own risk! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js)
 
-![Embed Sender](https://i.imgur.com/ZZwhF86.png)
+<!--![Embed Sender](https://i.imgur.com/ZZwhF86.png)-->
 
 ## Spotify Crack
 Spotify listen along without premium! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/spotify_crack.js)
@@ -58,8 +58,10 @@ Adds the number of online friends in right above the list | [Download](https://r
 ## Binary Converter
 Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
 
-![Binary Converter](https://i.imgur.com/rajxOSi.png)
+<!--![Binary Converter](https://i.imgur.com/rajxOSi.png)-->
 
+## Unread Servers
+Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js)
 
 # Remaked plugins
 ## Full Timestamps
