@@ -63,6 +63,9 @@ Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-
 ## Unread Servers
 Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js)
 
+## Activity Feed Bypass
+Activity Feed privacy permissions bypass | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/activity_feed_bypass.js)
+
 # Remaked plugins
 ## Full Timestamps
 My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
