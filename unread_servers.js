@@ -12,7 +12,7 @@ module.exports = new Plugin({
         await module.exports.loadLib();
         document.addEventListener("keyup", module.exports.onkey);
         JubyLib.injectCSS('uspcss', `.uspsico {height: 48px; width: 48px; border-radius: 50%; display: inline;}`)
-        JubyLib.updatesModule.checkUpdate("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", module.exports, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js");
+        JubyLib.updatesModule.check("https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/plugins_versions.json", module.exports, "https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js");
 	},
     unload: () => {
         document.removeEventListener("keyup", module.exports.onkey)
