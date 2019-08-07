@@ -6,7 +6,7 @@ module.exports = new Plugin({
     author: "Juby210#2100",
     description: "Open unread server list on ctrl+s",
     color: "#ff0000",
-    version: 1.01,
+    version: 1.02,
 
     load: async () => {
         await module.exports.loadLib();
@@ -29,7 +29,11 @@ module.exports = new Plugin({
             Object.keys(gs).forEach(k => {
                 let g = gs[k]
                 if(hu(g.id)) {
-                    let cid = channels.filter(c => c.guild_id == g.id && chu(c.id))[0].id
+                    let cid = channels.filter(c => c.guild_id == g.id && chu(c.id))
+                    let cid2 = cid.filter(c => !findModule('isMuted').isChannelMuted(g.id, c.id))[0]
+                    if(cid2) cid = cid2.id;
+                    else cid = cid[0].id;
+
                     content += `<div style="color:white"><a href="javascript:findModules('selectChannel')[1].selectChannel('${g.id}','${cid}')"><div>
                         <img src="https://cdn.discordapp.com/icons/${g.id}/${g.icon}" class="uspsico"></img><h1 style="display:inline-block;margin-left:5px;color:white">${g.name}<h1></div></a></div>`
                 }
