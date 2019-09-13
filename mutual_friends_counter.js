@@ -17,9 +17,14 @@ module.exports = new Plugin({
         if(!e.target || !e.target.classList) return;
         let el = e.target;
         
-        if (el.classList.contains("scrollerWrap-2lJEkd") && Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2].style.color == "rgb(255, 255, 255)") {
-            //console.log(el);
+        if(!Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2]) return;
+        if (el.classList.contains("scrollerWrap-2lJEkd") &&
+            (Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2].style.color == "rgb(255, 255, 255)"
+            || Array.from(Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2].classList).filter(x=>x.includes("selected")).length != 0)) {
+
             let scroller = Array.from(el.getElementsByClassName("scroller-2FKFPG"))[0];
+            if(!scroller) return;
+
             let loading = Array.from(el.getElementsByClassName("spinner-2enMB9")).length;
             if(loading != 0) setTimeout(() => check(scroller, el), 200); else cont(scroller);
         }
