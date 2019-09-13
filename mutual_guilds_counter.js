@@ -17,9 +17,14 @@ module.exports = new Plugin({
         if(!e.target || !e.target.classList) return;
         let el = e.target;
         
-        if (el.classList.contains("scrollerWrap-2lJEkd") && Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[1].style.color == "rgb(255, 255, 255)") {
-            //console.log(el);
+        if(!Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[1]) return;
+        if(el.classList.contains("scrollerWrap-2lJEkd") &&
+            (Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[1].style.color == "rgb(255, 255, 255)"
+            || Array.from(Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[1].classList).filter(x=>x.includes("selected")).length != 0)) {     
+    
             let scroller = Array.from(el.getElementsByClassName("scroller-2FKFPG"))[0];
+            if(!scroller) return;
+
             let count = Array.from(scroller.getElementsByClassName("listRow-hutiT_")).length;
             let elm = Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[1];
             if(elm.innerText.includes(" [") && elm.innerText.includes("]")) {
