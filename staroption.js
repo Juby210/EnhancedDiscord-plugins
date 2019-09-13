@@ -10,16 +10,16 @@ module.exports = new Plugin({
 
     load: () => {
         const Button = findModule("ButtonSizes").default;
-        const className = EDApi.findModule(m => m.button && m.item).item;
+        const className = findModule("item").item + " " + findModule("item").clickable;
         
         monkeyPatch(findModule("MessageOptionPopout").MessageOptionPopout.prototype, "render", b => {
             const render = b.callOriginalMethod();
-            render.props.children.push(e(Button, {
-					look: Button.Looks.BLANK,
-					size: Button.Sizes.NONE,
-					onClick: () => module.exports.star(b.thisObject.props),
-					className,
-					role: "menuitem"
+            render.props.children.props.children.push(e(Button, {
+                look: Button.Looks.BLANK,
+                size: Button.Sizes.NONE,
+                onClick: () => module.exports.star(b.thisObject.props),
+                className,
+                role: "menuitem"
             }, "Star"));
             return render;
         });
