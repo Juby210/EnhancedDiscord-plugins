@@ -52,14 +52,6 @@ Add accounts in plugin settings
 ## @all
 Mention all members when @all | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/at_all.js)
 
-## Online Friends Count
-Adds the number of online friends in right above the list | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/online_friends_count.js)
-
-## Binary Converter
-Binary converter plugin. | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/binary_converter.js)
-
-<!--![Binary Converter](https://i.imgur.com/rajxOSi.png)-->
-
 ## Unread Servers
 Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js)
 
