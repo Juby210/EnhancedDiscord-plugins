@@ -10,7 +10,7 @@ module.exports = new Plugin({
 
     load: () => {
         const Button = findModule("ButtonSizes").default;
-        const className = findModule("item").item + " " + findModule("item").clickable;
+        const className = EDApi.findModule(m => m.button && m.item).item;
         
         monkeyPatch(findModule("MessageOptionPopout").MessageOptionPopout.prototype, "render", b => {
             const render = b.callOriginalMethod();
