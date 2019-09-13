@@ -29,7 +29,7 @@ module.exports = new Plugin({
                 if(dat == 'Invalid Date') dat = new Date(Number($(e).attr('datetime'))).toLocaleString();
                 $(e).on('mouseenter', () => {
                     setTimeout(() => {
-                        $('.'+findModules('tooltip')[1].tooltip.split(' ')[0]).html(dat);
+                        $('.'+findModule('tooltip').tooltip.split(' ')[0]).html(dat);
                     }, 1);
                 });
                 $(e).addClass('full-timestamps');
