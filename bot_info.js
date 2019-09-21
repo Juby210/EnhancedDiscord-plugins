@@ -65,16 +65,19 @@ module.exports = new Plugin({
                 tags.push($(name).text().replace(/	/g, "").replace(new RegExp("\n", "g"), ""))
             })
             let n = "&nbsp;".repeat(15)
-            let shards = ""
-            if($(r).find(".votebutton")[2].text() != $(r).find(".votebutton").last().text()) {
-                shards = `${n}<strong>Shards</strong>: ${$(r).find(".votebutton").last().text().replace(/	/g, "").split("\n")[1].split(" ")[0]}`
+            let serversshards = ""
+            if($(r).find(".serversshards .votebutton").length == 1) {
+                serversshards = `${n}<strong>Servers</strong>: ${$(r).find(".serversshards .votebutton").first().text().replace(/	/g, "").split("\n")[1]}`
+            } else if ($(r).find(".serversshards .votebutton").length > 1) {
+                serversshards = `${n}<strong>Servers</strong>: ${$(r).find(".serversshards .votebutton").first().text().replace(/	/g, "").split("\n")[1]}`
+                serversshards += `${n}<strong>Shards</strong>: ${$(r).find(".serversshards .votebutton").last().text().replace(/	/g, "").split("\n")[1].split(" ")[0]}`
             }
 
             $(m).html(`<strong>Description</strong>: ${$(r).find(".bot-description").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}
 <a href="${$(r).find(".votebutton").first().parent().attr("href")}" rel="noreferrer noopener" target="_blank">[Invite]</a>\n<strong>Website</strong>: ${web}\n<strong>Github</strong>: ${github}
 <strong>Prefix</strong>: ${$(r).find("#prefix").first().text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}
 <strong>Lib</strong>: ${$(r).find("#libclick").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}\n<strong>Owners</strong>: ${owners.join(", ")}
-<strong>Tags</strong>: ${tags.join(", ")}\n<strong>Votes</strong>: ${$(r).find("#points").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}${n}<strong>Servers</strong>: ${$(r).find(".votebutton")[2].text().replace(/	/g, "").split("\n")[1]}${shards}
+<strong>Tags</strong>: ${tags.join(", ")}\n<strong>Votes</strong>: ${$(r).find("#points").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}${serversshards}
 <a href="https://discordbots.org/bot/${id}" rel="noreferrer noopener" target="_blank">[Show on discordbots.org]</a>`)
         }
     }
