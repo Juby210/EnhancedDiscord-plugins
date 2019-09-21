@@ -58,6 +58,9 @@ Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com
 ## Bots Mutual Guilds
 Brings back mutual servers to bot accounts | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bots_mutual_guilds.js)
 
+## Bot Info
+Show DiscordBots.org bot info on bot profile | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bot_info.js)
+
 ## Activity Feed Bypass
 Activity Feed privacy permissions bypass | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/activity_feed_bypass.js)
 
