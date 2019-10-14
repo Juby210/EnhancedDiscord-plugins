@@ -19,25 +19,42 @@ module.exports = new Plugin({
             margin-top: 5px;
             margin-right: 5px;
         }
-        #switcher-btn {
-            margin-right: 20px;
-            color: #a5a7a7;
-            background: transparent;
-        }</style>`);
-        module.exports.load2();
-        $('.'+findModule('winButtonMinMax').winButtonMinMax.split(' ')[0]).last().after(`<button type="button" id="switcher-btn" class="${findModule('winButtonMinMax').winButtonMinMax}">Switcher</button>`);
-        $('#switcher-btn').click(() => {
-            findModule('login').loginReset();
-            setTimeout(() => module.exports.load2(),500);
-        });
+        #switcher-btn:hover {
+            background-color: rgba(240, 71, 71, 0.1);
+        }</style>`)
+        module.exports.load2()
+        
+        const tabsM = findModule('topPill')
+        monkeyPatch(findModule('getUserSettingsSections').default.prototype, 'render', b => {
+            if($('#switcher-btn').length == 0) {
+                let parent = document.querySelector('.' + tabsM.side.split(' ')[0])
+                if(!parent) {
+                    setTimeout(() => b.thisObject.forceUpdate(), 100)
+                    return b.callOriginalMethod(b.methodArguments)
+                }
+
+                if($(parent).find('.'+tabsM.item.split(' ')[0]).length == 0) {
+                    return b.callOriginalMethod(b.methodArguments)
+                }
+                let logout = $(parent).find('.'+tabsM.item.split(' ')[0]).last()
+                let btn = $(logout).clone()
+                $(btn).attr('id', 'switcher-btn').text('Switch Account')
+                $(btn).click(() => {
+                    findModule('login').loginReset()
+                    setTimeout(() => module.exports.load2(), 500)
+                })
+                $(logout).after(btn)
+            }
+            return b.callOriginalMethod(b.methodArguments)
+        })
     },
     unload: () => {
         let s = document.getElementById('accswitch');
         if(s) s.parentElement.removeChild(s);   
         s = document.getElementById('accswitch-style');
         if(s) s.parentElement.removeChild(s);
-        s = document.getElementById('switcher-btn');
-        if(s) s.parentElement.removeChild(s);
+        s = findModule('getUserSettingsSections').default.prototype
+        if(s.render.__monkeyPatched) s.render.unpatch();
     },
 
     load2: () => {
