@@ -9,34 +9,37 @@ module.exports = new Plugin({
     color: 'aqua',
 
     load: () => {
-        document.body.addEventListener('DOMNodeInserted', module.exports.listener);
+        monkeyPatch(findModule("dispatch"), "dispatch", b => {
+            let o = b.callOriginalMethod(b.methodArguments)
+            if(b.methodArguments[0] && b.methodArguments[0].type == "USER_PROFILE_MODAL_OPEN") {
+                module.exports.check(b.methodArguments[0])
+            }
+            return o
+        })
     },
     unload: () => {
-        document.body.removeEventListener('DOMNodeInserted', module.exports.listener);
+        let m = findModule("dispatch").dispatch
+        if(m.__monkeyPatched) m.unpatch()
     },
 
-    listener: e => {
-        if(!e.target || !e.target.classList) return;
-        let el = e.target;
-        let nt = findModules("nameTag")[1];
+    check: arg => {
+        let el = $("."+findModules("modal")[2].modal.split(" ")[0])
+        if(el.length == 0) {
+            setTimeout(() => module.exports.check(arg), 100)
+            return;
+        }
+        if(findModule("getUser").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
+    },
+    listener: (el, id) => {
+        if(cache[id] && cache[id].d + (60 * 60 * 1000) >= Date.now()) {
+            module.exports.parse(id, el, 200, cache[id].body)
+        } else {
+            request(`https://discordbots.org/bot/${id}`, (err, res, body) => {
+                if(err) return console.error(err);
 
-        if(el.classList.contains(findModules("modal")[2].modal.split(" ")[0]) && $(el).find("."+nt.nameTag.split(" ")[0]).length != 0 
-            && $(el).find("."+findModules("botTag")[2].botTag.split(" ")[0]).length != 0) {
-            
-            let un = $(el).find("."+nt.username.split(" ")[0]).text()
-            let dr = $(el).find("."+nt.discriminator.split(" ")[0]).text().replace("#", "")
-            let id = Object.values(findModule("getUsers").getUsers()).find(u => u.username == un && u.discriminator == dr).id
-
-            if(cache[id] && cache[id].d + (60 * 60 * 1000) >= Date.now()) {
-                module.exports.parse(id, el, 200, cache[id].body)
-            } else {
-                request(`https://discordbots.org/bot/${id}`, (err, res, body) => {
-                    if(err) return console.error(err);
-    
-                    module.exports.parse(id, el, res.statusCode, body)
-                    if(res.statusCode == 200) cache[id] = { body, d: Date.now() }
-                })
-            }
+                module.exports.parse(id, el, res.statusCode, body)
+                if(res.statusCode == 200) cache[id] = { body, d: Date.now() }
+            })
         }
     },
     parse: (id, el, code, body) => {
