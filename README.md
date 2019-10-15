@@ -61,6 +61,9 @@ Brings back mutual servers to bot accounts | [Download](https://raw.githubuserco
 ## Bot Info
 Show DiscordBots.org bot info on bot profile | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bot_info.js)
 
+## Copy Mention
+Add "Copy Mention" button to easy copy id mention of channel or user | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/copy_mention.js)
+
 ## Activity Feed Bypass
 Activity Feed privacy permissions bypass | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/activity_feed_bypass.js)
 
