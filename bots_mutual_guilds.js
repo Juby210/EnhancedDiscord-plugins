@@ -62,6 +62,9 @@ module.exports = new Plugin({
                     <div class="${hc.listRowContent}"><div class="${hc.listName}">${g.g.name}</div><div class="${hc.guildNick}">${g.nick ? g.nick : ""}</div></div></div></div>`)
                     .click(() => module.exports.select(g.g.id)))
             })
+
+            let mgc = ED.plugins["mutual_guilds_counter"]
+            if(mgc && mgc.settings.enabled !== false) mgc.listener()
         })
 
         $(el).find("#bmg0").click(() => {
