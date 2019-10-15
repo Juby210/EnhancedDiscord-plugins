@@ -7,17 +7,10 @@ module.exports = new Plugin({
     color: 'aqua',
 
     load: () => {
-        monkeyPatch(findModule("dispatch"), "dispatch", b => {
-            let o = b.callOriginalMethod(b.methodArguments)
-            if(b.methodArguments[0] && b.methodArguments[0].type == "USER_PROFILE_MODAL_OPEN") {
-                module.exports.check(b.methodArguments[0])
-            }
-            return o
-        })
+        findModule("dispatch").subscribe("USER_PROFILE_MODAL_OPEN", module.exports.check)
     },
     unload: () => {
-        let m = findModule("dispatch").dispatch
-        if(m.__monkeyPatched) m.unpatch()
+        findModule("dispatch").unsubscribe("USER_PROFILE_MODAL_OPEN", module.exports.check)
     },
 
     check: arg => {
