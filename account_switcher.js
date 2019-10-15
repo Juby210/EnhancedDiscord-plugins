@@ -6,6 +6,7 @@ module.exports = new Plugin({
     author: 'Juby210#2100',
     description: 'Lets you switch between multiple Discord accounts',
     color: '#f44336',
+    preload: true,
 
     load: () => {
         $('head').append(`<style id="accswitch-style">
