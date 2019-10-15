@@ -7,40 +7,21 @@ module.exports = new Plugin({
     color: 'aqua',
 
     load: () => {
-        document.body.addEventListener('DOMNodeInserted', module.exports.listener);
+        findModule("dispatch").subscribe("LOAD_MUTUAL_FRIENDS", module.exports.listener)
     },
     unload: () => {
-        document.body.removeEventListener('DOMNodeInserted', module.exports.listener);
+        findModule("dispatch").unsubscribe("LOAD_MUTUAL_FRIENDS", module.exports.listener)
     },
 
-    listener: e => {
-        if(!e.target || !e.target.classList) return;
-        let el = e.target;
-        
-        if(!Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2]) return;
-        if (el.classList.contains("scrollerWrap-2lJEkd") &&
-            (Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2].style.color == "rgb(255, 255, 255)"
-            || Array.from(Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2].classList).filter(x=>x.includes("selected")).length != 0)) {
+    listener: arg => {
+        let c2 = EDApi.findModuleByProps("item", "selected", "themed")
+        let modal = document.querySelector("."+findModules("modal")[2].modal.split(" ")[0])
+        if(!modal) return;
 
-            let scroller = Array.from(el.getElementsByClassName("scroller-2FKFPG"))[0];
-            if(!scroller) return;
-
-            let loading = Array.from(el.getElementsByClassName("spinner-2enMB9")).length;
-            if(loading != 0) setTimeout(() => check(scroller, el), 200); else cont(scroller);
+        let elm = Array.from(modal.getElementsByClassName(c2.item.split(" ")[0]))[2]
+        if(elm.innerText.includes(" [") && elm.innerText.includes("]")) {
+            elm.innerText = elm.innerText.split(" [")[0]
         }
+        elm.innerText += ` [${arg.mutualFriends.length}]`
     }
 });
-
-function check(scroller, el) {
-    let loading = Array.from(el.getElementsByClassName("spinner-2enMB9")).length;
-    if(loading != 0) setTimeout(() => check(scroller, el), 200); else cont(scroller);
-}
-
-function cont(scroller) {
-    let count = Array.from(scroller.getElementsByClassName("listRow-hutiT_")).length;
-    let elm = Array.from(document.body.getElementsByClassName("item-PXvHYJ"))[2];
-    if(elm.innerText.includes(" [") && elm.innerText.includes("]")) {
-        elm.innerText = elm.innerText.split(" [")[0];
-    }
-    elm.innerText += ` [${count}]`;
-}
