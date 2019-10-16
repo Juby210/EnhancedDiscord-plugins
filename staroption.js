@@ -1,6 +1,5 @@
 const Plugin = require('../plugin');
-const {React: {createElement: e}} = EDApi;
-const star = {id: null, name: "⭐", animated: false};
+const { React: { createElement: e }, findModuleByDisplayName } = EDApi;
 
 module.exports = new Plugin({
     name: 'Star Option',
@@ -9,27 +8,35 @@ module.exports = new Plugin({
     color: '#FFD700',
 
     load: () => {
-        const Button = findModule("ButtonSizes").default;
-        const className = EDApi.findModule(m => m.button && m.item).item;
-        
-        monkeyPatch(findModule("MessageOptionPopout").MessageOptionPopout.prototype, "render", b => {
-            const render = b.callOriginalMethod();
-            render.props.children.props.children.push(e(Button, {
-                look: Button.Looks.BLANK,
-                size: Button.Sizes.NONE,
-                onClick: () => module.exports.star(b.thisObject.props),
-                className,
-                role: "menuitem"
-            }, "Star"));
-            return render;
-        });
+        document.head.insertAdjacentHTML("beforeend", '<style id="staroption-css">.staroptionBtn {opacity: 0.8}</style>')
+
+        monkeyPatch(findModuleByDisplayName("MessageContent").prototype, "render", b => {
+            let { renderButtons } = b.thisObject.props
+            if(renderButtons) {
+                b.thisObject.props.renderButtons = arg => {
+                    const res = renderButtons(arg)
+                    if(res.props.children && !arg.message.reactions.find(r => r.emoji.name == "⭐" && r.me)) {
+                        res.props.children.props.children.unshift(e("img", {
+                            src: "https://canary.discordapp.com/assets/e4d52f4d69d7bba67e5fd70ffe26b70d.svg",
+                            alt: "Star",
+                            onClick: () => module.exports.star(arg),
+                            className: findModule("reactionBtn").reactionBtn + " staroptionBtn"
+                        }))
+                    }
+                    return res
+                }
+            }
+            return b.callOriginalMethod(b.methodArguments)
+        })
     },
     unload: () => {
-        let m = findModule("MessageOptionPopout").MessageOptionPopout.prototype.render;
-        if(m.__monkeyPatched) m.unpatch();
+        let m = findModuleByDisplayName("MessageContent").prototype.render
+        if(m.__monkeyPatched) m.unpatch()
+        let el = document.getElementById("staroption-css")
+        if(el) el.parentElement.removeChild(el)
     },
 
     star: t => {
-        findModule('addReaction').addReaction(t.message.channel_id, t.message.id, star);
+        findModule("addReaction").addReaction(t.message.channel_id, t.message.id, { name: "⭐" })
     }
 });
