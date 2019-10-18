@@ -16,6 +16,8 @@ module.exports = new Plugin({
                 b.thisObject.props.renderButtons = arg => {
                     const res = renderButtons(arg)
                     if(res.props.children && !arg.message.reactions.find(r => r.emoji.name == "⭐" && r.me)) {
+                        if(!res.props.children.props.children[1]) return res // no permission to add reaction
+
                         res.props.children.props.children.unshift(e("img", {
                             src: "https://canary.discordapp.com/assets/e4d52f4d69d7bba67e5fd70ffe26b70d.svg",
                             alt: "Star",
