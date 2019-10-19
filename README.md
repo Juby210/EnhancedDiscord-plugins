@@ -70,6 +70,3 @@ Activity Feed privacy permissions bypass | [Download](https://raw.githubusercont
 # Remaked plugins
 ## Full Timestamps
 My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
-
-## BetterSearchPage
-My remake of [BetterSearchPage](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/BetterSearchPage) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/betterSearchPage.js)
