@@ -16,7 +16,7 @@ module.exports = new Plugin({
     },
 
     check: arg => {
-        let el = $("."+findModules("modal")[2].modal.split(" ")[0])
+        let el = $("."+findModules("modal")[3].modal.split(" ")[0])
         if(el.length == 0) {
             setTimeout(() => module.exports.check(arg), 100)
             return;

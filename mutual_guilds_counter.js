@@ -20,7 +20,7 @@ module.exports = new Plugin({
         await module.exports.sleep(10)
 
         let c2 = EDApi.findModuleByProps("item", "selected", "themed")
-        let modal = document.querySelector("."+findModules("modal")[2].modal.split(" ")[0])
+        let modal = document.querySelector("."+findModules("modal")[3].modal.split(" ")[0])
         if(!modal) return;
         let scroller = modal.querySelector("."+findModule("scrollerWrap").scroller.split(" ")[0])
         

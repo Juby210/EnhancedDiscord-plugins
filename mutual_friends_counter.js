@@ -15,7 +15,7 @@ module.exports = new Plugin({
 
     listener: arg => {
         let c2 = EDApi.findModuleByProps("item", "selected", "themed")
-        let modal = document.querySelector("."+findModules("modal")[2].modal.split(" ")[0])
+        let modal = document.querySelector("."+findModules("modal")[3].modal.split(" ")[0])
         if(!modal) return;
 
         let elm = Array.from(modal.getElementsByClassName(c2.item.split(" ")[0]))[2]
