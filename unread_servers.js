@@ -1,6 +1,5 @@
 const Plugin = require('../plugin')
-const { React, React: { createElement: e }, injectCSS, clearCSS,
-    findModuleByDisplayName, findModuleByProps } = EDApi
+const { React, React: { createElement: e }, findModuleByDisplayName, findModuleByProps } = EDApi
 
 module.exports = new Plugin({
     name: "Unread Servers",
@@ -10,11 +9,9 @@ module.exports = new Plugin({
 
     load: () => {
         document.addEventListener("keyup", module.exports.onkey)
-        injectCSS('uspcss', `.uspsico {height: 48px; width: 48px; border-radius: 50%; display: inline;}`)
 	},
     unload: () => {
         document.removeEventListener("keyup", module.exports.onkey)
-        clearCSS('uspcss')
     },
 
     onkey: e => {
