@@ -4,20 +4,6 @@ Plugins for EnhancedDiscord.
 ### Information
 These plugins may require to enable `BD Plugins` in ed settings because using jQuery, so enable it and reload discord if not working.
 
-## Theme Settings [BROKEN]
-Adds Themes tab to EnhancedDiscord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/theme_settings.js)
-
-Note that all themes should be in: `<EDPATH>/themes` (auto create this folder on load)
-
-Supported all bd themes.
-
-By clicking `Ctrl+B` you hide all themes.
-
-## Embed Sender
-Send embed as user account. Use at own risk! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/embed_sender.js)
-
-<!--![Embed Sender](https://i.imgur.com/ZZwhF86.png)-->
-
 ## Spotify Crack
 Spotify listen along without premium! | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/spotify_crack.js)
 
@@ -61,12 +47,5 @@ Brings back mutual servers to bot accounts | [Download](https://raw.githubuserco
 ## Bot Info
 Show DiscordBots.org bot info on bot profile | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bot_info.js)
 
-## Copy Mention
-Add "Copy Mention" button to easy copy id mention of channel or user | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/copy_mention.js)
-
 ## Activity Feed Bypass
 Activity Feed privacy permissions bypass | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/activity_feed_bypass.js)
-
-# Remaked plugins
-## Full Timestamps
-My remake of [CompleteTimestamps](https://github.com/mwittrien/BetterDiscordAddons/tree/master/Plugins/CompleteTimestamps) plugin | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/full_timestamps.js)
