@@ -20,7 +20,7 @@ module.exports = new Plugin({
             const hu = findModule('getGuildUnreadCount').hasUnread
             const guilds = Object.values(gs).filter(g => hu(g.id))
 
-            findModule('push').push(module.exports.Modal, { guilds })
+            findModuleByProps('push', 'pushLazy', 'pop').push(module.exports.Modal, { guilds })
         }
     },
 
