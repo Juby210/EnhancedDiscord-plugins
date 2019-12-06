@@ -1,4 +1,5 @@
 const Plugin = require('../plugin');
+const { findModuleByProps } = EDApi;
 
 module.exports = new Plugin({
     name: 'Bots Mutual Guilds',
@@ -14,21 +15,21 @@ module.exports = new Plugin({
     },
 
     check: arg => {
-        let el = $("."+findModules("modal")[3].modal.split(" ")[0])
+        let el = $("."+findModule(m => m.modal && m.inner && !m.close).modal.split(" ")[0])
         if(el.length == 0) {
             setTimeout(() => module.exports.check(arg), 100)
             return;
         }
-        if(findModule("getUser").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
+        if(findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
     },
     listener: (el, id) => {
-        let hc = EDApi.findModuleByProps("header", "botTag", "listAvatar")
+        let hc = findModuleByProps("header", "botTag", "listAvatar")
         let c = findModule("tabBarContainer")
-        let c2 = EDApi.findModuleByProps("item", "selected", "themed")
+        let c2 = findModuleByProps("item", "selected", "themed")
         let m = findModule("Messages").Messages
 
         let sc = findModule("scrollerWrap")
-        let ic = EDApi.findModuleByProps("iconSizeMedium", "iconInactive")
+        let ic = findModuleByProps("iconSizeMedium", "iconInactive")
 
         $(el).find("." + hc.header.split(" ")[0]).parent()
             .append(`<div class="${c.tabBarContainer}"><div class="${c.tabBar}"><div id="bmg0" class="${c.tabBarItem} ${c2.item} ${c2.selected} ${c2.themed}" role="button" style="border-color:rgb(255,255,255)">

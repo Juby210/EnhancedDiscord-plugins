@@ -1,11 +1,12 @@
 const Plugin = require('../plugin');
 const request = require('request');
+const { findModuleByProps } = EDApi;
 let cache = {};
 
 module.exports = new Plugin({
     name: 'DiscordBots Bot Info',
     author: 'Juby210#2100',
-    description: 'Show DiscordBots.org bot info on bot profile',
+    description: 'Show Top.gg bot info on bot profile',
     color: 'aqua',
 
     load: () => {
@@ -16,18 +17,18 @@ module.exports = new Plugin({
     },
 
     check: arg => {
-        let el = $("."+findModules("modal")[3].modal.split(" ")[0])
+        let el = $("."+findModule(m => m.modal && m.inner && !m.close).modal.split(" ")[0])
         if(el.length == 0) {
             setTimeout(() => module.exports.check(arg), 100)
             return;
         }
-        if(findModule("getUser").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
+        if(findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
     },
     listener: (el, id) => {
         if(cache[id] && cache[id].d + (60 * 60 * 1000) >= Date.now()) {
             module.exports.parse(id, el, 200, cache[id].body)
         } else {
-            request(`https://discordbots.org/bot/${id}`, (err, res, body) => {
+            request(`https://top.gg/bot/${id}`, (err, res, body) => {
                 if(err) return console.error(err);
 
                 module.exports.parse(id, el, res.statusCode, body)
@@ -36,14 +37,14 @@ module.exports = new Plugin({
         }
     },
     parse: (id, el, code, body) => {
-        let hc = EDApi.findModuleByProps("header", "botTag", "listAvatar")
+        let hc = findModuleByProps("header", "botTag", "listAvatar")
         let sc = findModule("scrollerWrap")
 
         let scroller = $(el).find("."+sc.scroller.split(" ")[0])
         let di = $(scroller).find("."+hc.userInfoSection.split(" ")[0]).clone()
         $(di).find("."+hc.userInfoSectionHeader.split(" ")[0]).html("Bot Info")
         let m = $(di).find("textarea").parent().attr("class", findModule("markup").markup)
-        $(m).html("Bot not found on discordbots.org")
+        $(m).html("Bot not found on top.gg")
         $(scroller).append(di)
 
         if(code == 200) {
@@ -54,7 +55,7 @@ module.exports = new Plugin({
             github = github ? `<a href="${github}" rel="noreferrer noopener" target="_blank">${github}</a>` : "-"
             let owners = []
             $(r).find("#createdby").find("span").each((i, name) => {
-                owners.push(`<a href="https://discordbots.org${$(name).parent().attr("href")}" rel="noreferrer noopener" target="_blank">${$(name).text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}</a>`)
+                owners.push(`<a href="https://top.gg${$(name).parent().attr("href")}" rel="noreferrer noopener" target="_blank">${$(name).text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}</a>`)
             })
             let tags = []
             $(r).find(".atag").each((i, name) => {
@@ -74,7 +75,7 @@ module.exports = new Plugin({
 <strong>Prefix</strong>: ${$(r).find("#prefix").first().text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}
 <strong>Lib</strong>: ${$(r).find("#libclick").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}\n<strong>Owners</strong>: ${owners.join(", ")}
 <strong>Tags</strong>: ${tags.join(", ")}\n<strong>Votes</strong>: ${$(r).find("#points").text().replace(/	/g, "").replace(new RegExp("\n", "g"), "")}${serversshards}
-<a href="https://discordbots.org/bot/${id}" rel="noreferrer noopener" target="_blank">[Show on discordbots.org]</a>`)
+<a href="https://top.gg/bot/${id}" rel="noreferrer noopener" target="_blank">[Show on top.gg]</a>`)
         }
     }
 });
