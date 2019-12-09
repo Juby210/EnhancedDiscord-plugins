@@ -1,4 +1,5 @@
-const Plugin = require('../plugin');
+const Plugin = require('../plugin')
+const { findModuleByProps } = EDApi
 
 module.exports = new Plugin({
     name: 'Mutual Friends Counter',
@@ -14,8 +15,8 @@ module.exports = new Plugin({
     },
 
     listener: arg => {
-        let c2 = EDApi.findModuleByProps("item", "selected", "themed")
-        let modal = document.querySelector("."+findModules("modal")[3].modal.split(" ")[0])
+        let c2 = findModuleByProps("item", "selected", "themed")
+        let modal = document.querySelector("."+findModule(m => m.modal && m.inner && !m.close).modal.split(" ")[0])
         if(!modal) return;
 
         let elm = Array.from(modal.getElementsByClassName(c2.item.split(" ")[0]))[2]

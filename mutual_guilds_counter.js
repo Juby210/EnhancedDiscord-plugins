@@ -1,4 +1,5 @@
-const Plugin = require('../plugin');
+const Plugin = require('../plugin')
+const { findModuleByProps } = EDApi
 
 module.exports = new Plugin({
     name: 'Mutual Guilds Counter',
@@ -19,12 +20,13 @@ module.exports = new Plugin({
     listener: async () => {
         await module.exports.sleep(10)
 
-        let c2 = EDApi.findModuleByProps("item", "selected", "themed")
-        let modal = document.querySelector("."+findModules("modal")[3].modal.split(" ")[0])
+        const hc = findModuleByProps("header", "botTag", "listAvatar")
+        const c2 = findModuleByProps("item", "selected", "themed")
+        let modal = document.querySelector("."+findModule(m => m.modal && m.inner && !m.close).modal.split(" ")[0])
         if(!modal) return;
         let scroller = modal.querySelector("."+findModule("scrollerWrap").scroller.split(" ")[0])
         
-        let count = scroller.childNodes.length
+        let count = Array.from(scroller.children).filter(c => c.classList.contains(hc.listRow)).length
         let elm = Array.from(modal.getElementsByClassName(c2.item.split(" ")[0]))[1]
         if(elm.innerText.includes(" [") && elm.innerText.includes("]")) {
             elm.innerText = elm.innerText.split(" [")[0]
