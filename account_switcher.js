@@ -3,7 +3,7 @@ const {loadData, saveData} = EDApi;
 
 module.exports = new Plugin({
     name: 'Account Switcher',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Lets you switch between multiple Discord accounts',
     color: '#f44336',
     preload: true,

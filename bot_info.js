@@ -4,7 +4,7 @@ let cache = {}
 
 module.exports = new Plugin({
     name: 'DiscordBots Bot Info',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Show Top.gg bot info on bot profile',
     color: 'aqua',
 

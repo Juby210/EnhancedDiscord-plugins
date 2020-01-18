@@ -2,7 +2,7 @@ const Plugin = require('../plugin')
 
 module.exports = new Plugin({
     name: 'Bots Mutual Guilds',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Brings back mutual servers to bot accounts',
     color: 'aqua',
 

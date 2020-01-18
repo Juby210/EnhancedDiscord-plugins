@@ -2,7 +2,7 @@ const Plugin = require('../plugin')
 
 module.exports = new Plugin({
     name: 'Mutual Friends Counter',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Mutual friends counter',
     color: 'aqua',
 

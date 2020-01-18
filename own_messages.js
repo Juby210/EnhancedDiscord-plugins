@@ -5,7 +5,7 @@ let orginalmess = {};
 
 module.exports = new Plugin({
     name: 'Own Messages',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Create your own messages for discord',
     color: '#f44336',
 
