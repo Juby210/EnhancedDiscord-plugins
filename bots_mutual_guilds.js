@@ -1,5 +1,4 @@
-const Plugin = require('../plugin');
-const { findModuleByProps } = EDApi;
+const Plugin = require('../plugin')
 
 module.exports = new Plugin({
     name: 'Bots Mutual Guilds',
@@ -20,16 +19,17 @@ module.exports = new Plugin({
             setTimeout(() => module.exports.check(arg), 100)
             return;
         }
-        if(findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
+        // why { findModuleByDisplayName } = EDApi doesn't work on newest ED..
+        if(EDApi.findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
     },
     listener: (el, id) => {
-        let hc = findModuleByProps("header", "botTag", "listAvatar")
+        let hc = EDApi.findModuleByProps("header", "botTag", "listAvatar")
         let c = findModule("tabBarContainer")
-        let c2 = findModuleByProps("item", "selected", "themed")
+        let c2 = EDApi.findModuleByProps("item", "selected", "themed")
         let m = findModule("Messages").Messages
 
         let sc = findModule("scrollerWrap")
-        let ic = findModuleByProps("iconSizeMedium", "iconInactive")
+        let ic = EDApi.findModuleByProps("iconSizeMedium", "iconInactive")
 
         $(el).find("." + hc.header.split(" ")[0]).parent()
             .append(`<div class="${c.tabBarContainer}"><div class="${c.tabBar}"><div id="bmg0" class="${c.tabBarItem} ${c2.item} ${c2.selected} ${c2.themed}" role="button" style="border-color:rgb(255,255,255)">

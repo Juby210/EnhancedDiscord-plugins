@@ -1,16 +1,17 @@
-const Plugin = require('../plugin');
-const { React: { createElement: e }, findModuleByDisplayName } = EDApi;
+const Plugin = require('../plugin')
 
 module.exports = new Plugin({
     name: 'Star Option',
-    author: 'Juby210#2100',
+    author: 'Juby210#0577',
     description: 'Star option in message options',
     color: '#FFD700',
 
     load: () => {
+        const { React: { createElement: e } } = EDApi
         document.head.insertAdjacentHTML("beforeend", '<style id="staroption-css">.staroptionBtn {opacity: 0.8}</style>')
 
-        monkeyPatch(findModuleByDisplayName("MessageContent").prototype, "render", b => {
+        // why { findModuleByDisplayName } = EDApi doesn't work on newest ED..
+        monkeyPatch(EDApi.findModuleByDisplayName("MessageContent").prototype, "render", b => {
             let { renderButtons } = b.thisObject.props
             if(renderButtons) {
                 b.thisObject.props.renderButtons = arg => {
@@ -32,7 +33,7 @@ module.exports = new Plugin({
         })
     },
     unload: () => {
-        let m = findModuleByDisplayName("MessageContent").prototype.render
+        let m = EDApi.findModuleByDisplayName("MessageContent").prototype.render
         if(m.__monkeyPatched) m.unpatch()
         let el = document.getElementById("staroption-css")
         if(el) el.parentElement.removeChild(el)

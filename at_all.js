@@ -1,36 +1,46 @@
-const Plugin = require('../plugin');
+const Plugin = require('../plugin')
 
 module.exports = new Plugin({
     name: '@all',
-    author: 'Juby210#2100',
-    description: 'Mention all members when @all',
+    author: 'Juby210#0577',
+    description: 'Mention all members when @all (@everyone without permissions)',
     color: '#f44336',
 
     load: async () => {
-        const gg = findModule('getGuild'), gu = findModule('getUser').getUser, lg = findModule('getLastSelectedGuildId'), gm = findModule('getMembers').getMembers;
+        const { getGuild } = findModule('getGuild'),
+            { getUser } = findModule('getCurrentUser'),
+            { getGuildId } = findModule('getLastSelectedGuildId'),
+            { getMembers } = findModule('getMembers')
 
-        module.exports.lis = e => {
-            let text = e.target.value;
+        const m = EDApi.findModuleByDisplayName('ChannelEditorContainer').prototype
+        monkeyPatch(m, 'render', { before: b => {
+            let { textValue } = b.thisObject.props
+            let gID = getGuildId()
+            let g = getGuild(gID)
 
-            let guildID = lg.getLastSelectedGuildId();
-            let g = gg.getGuild(guildID);
+            if(!gID || !g || !textValue || !textValue.includes('@all')) return
 
-            if (!guildID || !g || !text || !text.includes('@all')) return;
-
-            let members = gm(guildID);
+            let members = getMembers(gID)
             members.forEach(mem => {
-                if(gu(mem.userId).bot) return;
-                text += ' <@' + mem.userId + '>';
-            });
+                if(getUser(mem.userId).bot) return
+                textValue += ' <@' + mem.userId + '>'
+            })
 
-            text = text.replace(' @all', '').replace('@all', '');
-            if (e.target.value == text) return;
-            e.target.value = text;
-        };
-        document.addEventListener("input", module.exports.lis);
+            textValue = textValue.replace(' @all', '').replace('@all', '')
+            if(b.thisObject.props.textValue == textValue) return
+            b.thisObject.props.textValue = textValue
+            const { richValue } = b.thisObject.props
+            if(richValue && richValue._map && richValue._map._root && Array.isArray(richValue._map._root.entries)) {
+                let newRichValue = findModule('deserialize').deserialize(textValue)
+                richValue._map._root.entries.forEach((v, i) => {
+                    if(v[0] == "selection") newRichValue._map._root.entries[i] = v
+                })
+                b.thisObject.props.richValue = newRichValue
+            }
+        }, silent: true })
     },
     unload: () => {
-        document.removeEventListener("input", module.exports.lis);
-        module.exports.lis = null;
+        const m = EDApi.findModuleByDisplayName('ChannelEditorContainer').prototype.render
+        if(m.__monkeyPatched) m.unpatch()
     }
-});
+})

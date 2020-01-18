@@ -15,11 +15,6 @@ Mutual friends counter | [Download](https://raw.githubusercontent.com/juby210-PL
 
 ![Counter](https://i.imgur.com/4PjfsN6.png)
 
-## Text Mention
-Mention you when your username is in message content | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/textmention.js)
-
-Change mention list in plugin settings
-
 ## Own Messages
 Create your own messages for discord | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/own_messages.js)
 
@@ -36,7 +31,7 @@ Add accounts in plugin settings
 ![Preview](https://i.imgur.com/KkH0Sga.png)
 
 ## @all
-Mention all members when @all | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/at_all.js)
+Mention all members when @all (@everyone without permissions) | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/at_all.js)
 
 ## Unread Servers
 Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js)

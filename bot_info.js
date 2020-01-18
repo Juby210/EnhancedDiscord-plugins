@@ -1,7 +1,6 @@
-const Plugin = require('../plugin');
-const request = require('request');
-const { findModuleByProps } = EDApi;
-let cache = {};
+const Plugin = require('../plugin')
+const request = require('request')
+let cache = {}
 
 module.exports = new Plugin({
     name: 'DiscordBots Bot Info',
@@ -22,14 +21,15 @@ module.exports = new Plugin({
             setTimeout(() => module.exports.check(arg), 100)
             return;
         }
-        if(findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
+        // why { findModuleByDisplayName } = EDApi doesn't work on newest ED..
+        if(EDApi.findModuleByProps("getUser", "getUsers").getUser(arg.userId).bot) module.exports.listener(el, arg.userId)
     },
     listener: (el, id) => {
         if(cache[id] && cache[id].d + (60 * 60 * 1000) >= Date.now()) {
             module.exports.parse(id, el, 200, cache[id].body)
         } else {
             request(`https://top.gg/bot/${id}`, (err, res, body) => {
-                if(err) return console.error(err);
+                if(err) return console.error(err)
 
                 module.exports.parse(id, el, res.statusCode, body)
                 if(res.statusCode == 200) cache[id] = { body, d: Date.now() }
@@ -37,7 +37,7 @@ module.exports = new Plugin({
         }
     },
     parse: (id, el, code, body) => {
-        let hc = findModuleByProps("header", "botTag", "listAvatar")
+        let hc = EDApi.findModuleByProps("header", "botTag", "listAvatar")
         let sc = findModule("scrollerWrap")
 
         let scroller = $(el).find("."+sc.scroller.split(" ")[0])
