@@ -1,19 +1,20 @@
 const Plugin = require("../plugin")
 
 module.exports = new Plugin({
-    name: "Spotify Crack",
-    author: "Juby210#0577",
-    description: "Spotify listen along without premium!",
-    color: "#0000ff",
+    name: 'Spotify Crack',
+    author: 'Juby210#0577',
+    description: 'Spotify listen along without premium!',
+    color: '#0000ff',
+
     load: () => {
-        let f = findModule('ActionTypes')
-        monkeyPatch(findModule('getProfile'), 'getProfile', b => {
-            return findModule("default").default.dispatch({
-                type: f.ActionTypes.SPOTIFY_PROFILE_UPDATE,
+        const { ActionTypes: { SPOTIFY_PROFILE_UPDATE: type } } = findModule('ActionTypes')
+        monkeyPatch(findModule('getProfile'), 'getProfile', b =>
+            findModule('dispatch').dispatch({
+                type,
                 accountId: b.methodArguments[0],
                 isPremium: true
             })
-        })
+        )
         monkeyPatch(findModule('isSpotifyPremium'), 'isSpotifyPremium', () => true)
 	},
     unload: () => {
