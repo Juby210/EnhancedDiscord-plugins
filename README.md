@@ -36,9 +36,6 @@ Mention all members when @all (@everyone without permissions) | [Download](https
 ## Unread Servers
 Open unread server list on ctrl+s | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/unread_servers.js)
 
-## Bots Mutual Guilds
-Brings back mutual servers to bot accounts | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bots_mutual_guilds.js)
-
 ## Bot Info
 Show DiscordBots.org bot info on bot profile | [Download](https://raw.githubusercontent.com/juby210-PL/EnhancedDiscord-plugins/master/bot_info.js)
 

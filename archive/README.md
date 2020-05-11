@@ -16,3 +16,6 @@ Broken, I'm not going to fix this plugin.
 
 ### Text Mention
 Broken, I'm not going to fix this plugin. ~~WIP Alternative for powercord: [Suggestion](https://github.com/powercord-community/suggestions/issues/1)~~
+
+### Bots Mutual Guilds
+Discord has it built in now.
