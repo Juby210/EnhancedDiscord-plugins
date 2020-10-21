@@ -1,3 +1,5 @@
+### Warning: These plugins are unmaintained and probably no longer works.
+
 # EnhancedDiscord Plugins
 Plugins for EnhancedDiscord.
 
